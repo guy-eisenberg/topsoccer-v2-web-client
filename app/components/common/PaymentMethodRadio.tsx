@@ -10,8 +10,12 @@ import TicketIcon from "./icons/TicketIcon";
 
 export default function PaymentMethodRadio({
   method,
+  user,
   ...rest
-}: RadioProps & { method: Topsoccer.PaymentMethod }) {
+}: RadioProps & {
+  method: Topsoccer.PaymentMethod;
+  user?: Topsoccer.User.Auth;
+}) {
   const { label, description, icon } = useMemo(() => {
     switch (method) {
       case "Apple":
@@ -46,7 +50,16 @@ export default function PaymentMethodRadio({
         };
       case "Wallet":
         return {
-          label: "ניקוב",
+          label: (
+            <span className="flex gap-2">
+              <span>ניקוב</span>
+              {user && (
+                <span className="rounded-lg bg-theme-green/10 px-2 text-[10px] text-theme-green">
+                  {user.wallet} בחשבון
+                </span>
+              )}
+            </span>
+          ),
           description: "שלם באמצעות ניקוב אחד.",
           icon: <TicketIcon />,
         };
@@ -56,7 +69,7 @@ export default function PaymentMethodRadio({
           description: "",
         };
     }
-  }, [method]);
+  }, [method, user]);
 
   return (
     <Radio

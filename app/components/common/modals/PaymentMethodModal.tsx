@@ -76,6 +76,7 @@ const PaymentMethodModal: React.FC<PaymentMethodModalProps> = ({
                 >
                   {paymentMethods.map((method) => (
                     <PaymentMethodRadio
+                      user={user}
                       value={method}
                       method={method}
                       key={method}

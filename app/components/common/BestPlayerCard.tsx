@@ -49,7 +49,7 @@ export default function BestPlayerCard({
       <Image
         alt="Background"
         className="blur-[2px] brightness-50"
-        src="/images/soccer_field.jpeg"
+        src="/images/soccer-field.jpeg"
         fill
       />
       <div className="relative flex flex-1 flex-col text-center text-warning">

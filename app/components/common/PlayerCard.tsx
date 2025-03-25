@@ -79,7 +79,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
       {showStats && (
         <div className="flex justify-between gap-2 p-2 font-medium text-theme-green">
           <Tooltip content="כמות שערים">
-            <div className="flex items-center gap-1 rounded-lg bg-default-100 px-[6px]">
+            <div className="flex items-center gap-1 rounded-lg border border-transparent bg-default-100 px-[6px] hover:border-theme-green">
               <GoalIcon className="h-[14px] w-[14px]" />
 
               <p className="w-3 text-sm leading-[14px]">{player.goals || 0}</p>
@@ -88,7 +88,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
           {player.is_goalkeeper && (
             <>
               <Tooltip content="הצלות פנדלים">
-                <div className="flex items-center gap-1 rounded-lg bg-default-100 px-[6px]">
+                <div className="flex items-center gap-1 rounded-lg border border-transparent bg-default-100 px-[6px] hover:border-theme-green">
                   <PenaltyIcon className="h-4 w-4" />
 
                   <p className="w-3 text-sm leading-4">
@@ -97,7 +97,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
                 </div>
               </Tooltip>
               <Tooltip content="רשת נקייה">
-                <div className="flex items-center gap-1 rounded-lg bg-default-100 px-[6px]">
+                <div className="flex items-center gap-1 rounded-lg border border-transparent bg-default-100 px-[6px] hover:border-theme-green">
                   <CleanNetIcon className="h-4 w-4" />
 
                   <p className="w-3 text-sm leading-4">

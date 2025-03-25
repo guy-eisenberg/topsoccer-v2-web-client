@@ -11,17 +11,12 @@ import { createClient } from "@/clients/supabase/client";
 import { useRouter } from "@/context/RouterContext";
 import type { Topsoccer } from "@/types";
 import { calculateEventTitle } from "@/utils/calculateEventTitle";
-import { EVENT_SUBTYPES, EVENT_TYPES } from "@/utils/constants";
+import { EVENT_SUBTYPES, EVENT_TYPES, TIMEZONE } from "@/utils/constants";
 import { getEventSubTypeLabel } from "@/utils/getEventSubTypeLabel";
 import toast from "@/utils/toast";
 import { DatePicker } from "@heroui/date-picker";
 import { cn } from "@heroui/theme";
-import {
-  fromDate,
-  getLocalTimeZone,
-  now,
-  ZonedDateTime,
-} from "@internationalized/date";
+import { fromDate, now, ZonedDateTime } from "@internationalized/date";
 import { useMemo, useState } from "react";
 import { upsertEvent as _upsertEvent } from "./actions";
 import CommonActionButtons from "./components/CommonActionButtons";
@@ -55,9 +50,7 @@ export default function ManageEventDetailsTab({
   const [city, setCity] = useState(event?.city || "");
   const [address, setAddress] = useState(event?.address || "");
   const [dateTime, setDateTime] = useState<ZonedDateTime | null>(
-    event
-      ? fromDate(new Date(event.time), getLocalTimeZone())
-      : now(getLocalTimeZone()),
+    event ? fromDate(new Date(event.time), TIMEZONE) : now(TIMEZONE),
   );
   const [comment, setComment] = useState(event?.comment || "");
   const [wazeUrl, setWazeUrl] = useState(event?.waze_url || "");
@@ -198,8 +191,11 @@ export default function ManageEventDetailsTab({
             onChange={(e) => setAddress(e.target.value)}
           />
         </div>
-        <div className="[direction:ltr]" dir="ltr">
+        <div dir="ltr">
           <DatePicker
+            classNames={{
+              input: "text-base",
+            }}
             value={dateTime}
             onChange={setDateTime}
             calendarProps={{ style: { direction: "ltr" } }}

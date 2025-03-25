@@ -4,6 +4,7 @@ import { Select } from "@/app/components/core/Select";
 import { SelectItem } from "@/app/components/core/SelectItem";
 import Tabs from "@/app/components/core/Tabs";
 import type { Topsoccer } from "@/types";
+import { TIMEZONE } from "@/utils/constants";
 import { CheckboxGroup } from "@heroui/checkbox";
 import { DateRangePicker } from "@heroui/date-picker";
 import {
@@ -18,7 +19,6 @@ import { Tab } from "@heroui/tabs";
 import {
   type CalendarDate,
   fromDate,
-  getLocalTimeZone,
   parseDate,
   toCalendarDate,
 } from "@internationalized/date";
@@ -81,8 +81,8 @@ export default function FilterModal({
       }
 
       setDateRange({
-        start: toCalendarDate(fromDate(minDate, getLocalTimeZone())),
-        end: toCalendarDate(fromDate(maxDate, getLocalTimeZone())),
+        start: toCalendarDate(fromDate(minDate, TIMEZONE)),
+        end: toCalendarDate(fromDate(maxDate, TIMEZONE)),
       });
     }
   }, [stadiumTimeFilterType, stadiumTypeFilterSelected]);
@@ -273,9 +273,7 @@ export default function FilterModal({
                           ),
                         });
                       }}
-                      maxValue={toCalendarDate(
-                        fromDate(new Date(), getLocalTimeZone()),
-                      )}
+                      maxValue={toCalendarDate(fromDate(new Date(), TIMEZONE))}
                       isDisabled={
                         stadiumTimeFilterType !== "custom" ||
                         !stadiumTypeFilterSelected

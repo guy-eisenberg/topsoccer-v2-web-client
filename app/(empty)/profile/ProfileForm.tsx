@@ -7,14 +7,11 @@ import { Button } from "@/app/components/core/Button";
 import Input from "@/app/components/core/Input";
 import { createClient } from "@/clients/supabase/client";
 import type { Topsoccer } from "@/types";
+import { TIMEZONE } from "@/utils/constants";
 import toast from "@/utils/toast";
 import { DatePicker } from "@heroui/date-picker";
 import { Skeleton } from "@heroui/skeleton";
-import {
-  fromDate,
-  getLocalTimeZone,
-  toCalendarDate,
-} from "@internationalized/date";
+import { fromDate, toCalendarDate } from "@internationalized/date";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -48,7 +45,7 @@ export default function ProfileForm({
   const [city, setCity] = useState(user.city || "");
   const [birthDate, setBirthDate] = useState(
     user.birth_date
-      ? toCalendarDate(fromDate(new Date(user.birth_date), getLocalTimeZone()))
+      ? toCalendarDate(fromDate(new Date(user.birth_date), TIMEZONE))
       : null,
   );
 
@@ -160,6 +157,9 @@ export default function ProfileForm({
           </Skeleton>
           <Skeleton className="rounded-xl" isLoaded={!loading}>
             <DatePicker
+              classNames={{
+                input: "text-base",
+              }}
               className="w-full"
               value={birthDate}
               onChange={setBirthDate}

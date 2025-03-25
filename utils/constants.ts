@@ -30,3 +30,5 @@ export const COLORS = {
   "theme-danger": "#f31260",
   "theme-gray": "#888888",
 };
+
+export const TIMEZONE = "Asia/Jerusalem";

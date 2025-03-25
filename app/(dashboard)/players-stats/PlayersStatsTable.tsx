@@ -28,6 +28,7 @@ export default async function PlayersStatsTable({
                 index={i}
                 key={player.id}
                 arbitraryStat={player.goals}
+                showStats={false}
               />
             </Link>
           ))}
@@ -47,6 +48,7 @@ export default async function PlayersStatsTable({
                 index={i}
                 key={player.id}
                 arbitraryStat={player.shows}
+                showStats={false}
               />
             </Link>
           ))}
@@ -66,6 +68,7 @@ export default async function PlayersStatsTable({
                 index={i}
                 key={player.id}
                 arbitraryStat={player.wins}
+                showStats={false}
               />
             </Link>
           ))}

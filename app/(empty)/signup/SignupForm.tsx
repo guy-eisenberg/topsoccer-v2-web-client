@@ -117,7 +117,9 @@ export default function SignupForm() {
     const hideLoading = showLoading();
 
     try {
-      await _signup({ firstName, lastName, email, password });
+      const error = await _signup({ firstName, lastName, email, password });
+
+      if (error) throw new Error(error.message);
 
       router.replace("/status=signup_success");
     } catch (err) {
@@ -162,7 +164,7 @@ export default function SignupForm() {
 
   function getSignupErrorMessage(err: AuthError) {
     switch (err.message) {
-      case "User already registered":
+      case "user_already_exists":
         return "כתובת אימייל כבר בשימוש";
       default:
         return err.message;

@@ -18,7 +18,13 @@ export async function passwordSignin({
       password,
     });
 
-    if (error) throw error;
+    if (error) {
+      if (error.code === "invalid_credentials") {
+        return { message: "invalid_credentials" };
+      }
+
+      throw error;
+    }
   } catch (err) {
     console.log(err);
 
@@ -73,7 +79,13 @@ export async function signup({
       },
     });
 
-    if (error) throw error;
+    if (error) {
+      if (error.code === "user_already_exists") {
+        return { message: "user_already_exists" };
+      }
+
+      throw error;
+    }
   } catch (err) {
     console.log(err);
 
@@ -105,7 +117,13 @@ export async function changePassword({ password }: { password: string }) {
   try {
     const { error } = await supabase.auth.updateUser({ password });
 
-    if (error) throw error;
+    if (error) {
+      if (error.code === "same_password") {
+        return { message: "same_password" };
+      }
+
+      throw error;
+    }
   } catch (err) {
     console.log(err);
 

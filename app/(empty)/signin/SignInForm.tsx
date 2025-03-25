@@ -100,13 +100,16 @@ export default function SignInForm() {
     const hideLoading = showLoading();
 
     try {
-      await _passwordSignin({ email, password });
+      const error = await _passwordSignin({ email, password });
+
+      if (error) throw new Error(error.message);
 
       router.replace("/?status=signin_success");
     } catch (err) {
       hideLoading();
 
       const msg = getSigninErrorMessage(err as AuthError);
+      console.log(msg);
 
       if (msg) {
         toast.error(msg);
@@ -128,24 +131,18 @@ export default function SignInForm() {
 
       window.location.replace(url);
     } catch (err) {
-      const msg = getSigninErrorMessage(err as AuthError);
+      console.log(err);
+      toast.error();
 
-      if (msg) {
-        toast.error(msg);
-      } else {
-        console.log(err);
-        toast.error();
+      hideLoading();
 
-        hideLoading();
-
-        return Promise.reject(err);
-      }
+      return Promise.reject(err);
     }
   }
 
   function getSigninErrorMessage(err: AuthError) {
     switch (err.message) {
-      case "Invalid login credentials":
+      case "invalid_credentials":
         return "שם משתמש או סיסמה לא נכונים";
       default:
         return false;

@@ -55,7 +55,9 @@ export default function NewPasswordForm() {
     const hideLoading = showLoading();
 
     try {
-      await _changePassword({ password });
+      const error = await _changePassword({ password });
+
+      if (error) throw new Error(error.message);
 
       router.replace("/?status=new_password_success");
     } catch (err) {
@@ -76,7 +78,7 @@ export default function NewPasswordForm() {
 
   function getNewPasswordErrorMessage(err: AuthError) {
     switch (err.message) {
-      case "New password should be different from the old password.":
+      case "same_password":
         return "נדרשת סיסמה שונה מהקודמת";
       default:
         return false;

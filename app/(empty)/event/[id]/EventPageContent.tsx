@@ -469,11 +469,14 @@ export default function EventPageContent({
             </div>
 
             {enrolled && !canUnrollByTime && (
-              <p className="mt-4 inline-block rounded-xl border border-danger bg-danger/20 px-2 py-1 text-sm font-semibold text-danger">
+              <p className="mt-4 inline-block rounded-xl border border-danger bg-danger-50 px-2 py-1 text-sm font-semibold text-danger">
                 🚨 ביטול אפשרי עד 10:00 בבוקר ביום המשחק 🚨
               </p>
             )}
 
+            <p className="mt-4 rounded-xl border border-warning bg-warning-50 px-2 py-1 text-center text-sm font-semibold text-warning">
+              מזכירים כי אין ביטוח לפציעות שחקנים!
+            </p>
             <div className="mt-4 flex justify-between">
               <div className="flex flex-wrap items-center gap-2">
                 <Button

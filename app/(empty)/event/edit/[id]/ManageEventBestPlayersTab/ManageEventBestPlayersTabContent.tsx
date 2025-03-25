@@ -1,6 +1,7 @@
 "use client";
 
 import { showLoading } from "@/app/components/common/Loader/Loader";
+import CropImageModal from "@/app/components/common/modals/CropImageModal/CropImageModal";
 import PlayerCard from "@/app/components/common/PlayerCard";
 import { Button } from "@/app/components/core/Button";
 import FileUploader from "@/app/components/core/FileUploader";
@@ -33,15 +34,20 @@ export default function ManageEventBestPlayersTabContent({
 }) {
   const router = useRouter();
 
+  const [cropImageModalOpen, setCropImageModalOpen] = useState(false);
+  const [cropImagePlayer, setCropImagePlayer] = useState<
+    "1" | "2" | undefined
+  >();
+
   const [bestPlayer, setBestPlayer] = useState<{
     title?: string;
     user_id: string | undefined;
-    image?: string | File;
+    image?: string | File | Blob;
   }>(event.best_player || { title: "", user_id: undefined, image: undefined });
   const [bestPlayer2, setBestPlayer2] = useState<{
     title?: string;
     user_id: string | undefined;
-    image?: string | File;
+    image?: string | File | Blob;
   }>(
     event.best_player_2 || { title: "", user_id: undefined, image: undefined },
   );
@@ -58,8 +64,29 @@ export default function ManageEventBestPlayersTabContent({
     return players.find((p) => p.id === bestPlayer2.user_id);
   }, [players, bestPlayer2]);
 
+  const currentCropImage = (() => {
+    if (cropImagePlayer === "1") {
+      if (
+        bestPlayer.image === undefined ||
+        typeof bestPlayer.image === "string"
+      )
+        return null;
+      return URL.createObjectURL(bestPlayer.image);
+    } else if (cropImagePlayer === "2") {
+      if (
+        bestPlayer2.image === undefined ||
+        typeof bestPlayer2.image === "string"
+      )
+        return null;
+
+      return URL.createObjectURL(bestPlayer2.image);
+    }
+
+    return null;
+  })();
+
   return (
-    <div className="flex flex-1 flex-col gap-2">
+    <div className="flex min-h-0 flex-1 flex-col gap-2">
       <div className="flex h-full min-h-0 flex-1 flex-col gap-2 md:flex-row">
         {bestPlayer.user_id && player1 ? (
           <div className="flex flex-1 flex-col gap-2">
@@ -114,9 +141,10 @@ export default function ManageEventBestPlayersTabContent({
                 <div className="relative flex-1 overflow-hidden rounded-xl">
                   <Image
                     alt="Image Preview"
-                    className="object-cover"
+                    className="object-contain"
                     src={
-                      bestPlayer.image instanceof File
+                      bestPlayer.image instanceof File ||
+                      bestPlayer.image instanceof Blob
                         ? URL.createObjectURL(bestPlayer.image)
                         : bestPlayer.image
                     }
@@ -198,9 +226,10 @@ export default function ManageEventBestPlayersTabContent({
                 <div className="relative flex-1 overflow-hidden rounded-xl">
                   <Image
                     alt="Image Preview"
-                    className="object-cover"
+                    className="object-contain"
                     src={
-                      bestPlayer2.image instanceof File
+                      bestPlayer2.image instanceof File ||
+                      bestPlayer2.image instanceof Blob
                         ? URL.createObjectURL(bestPlayer2.image)
                         : bestPlayer2.image
                     }
@@ -236,6 +265,16 @@ export default function ManageEventBestPlayersTabContent({
         </Button>
         <CommonActionButtons event={event} />
       </div>
+
+      {currentCropImage && (
+        <CropImageModal
+          aspect={2 / 1}
+          src={currentCropImage}
+          onSave={onImageCrop}
+          isOpen={cropImageModalOpen}
+          onOpenChange={setCropImageModalOpen}
+        />
+      )}
     </div>
   );
 
@@ -323,7 +362,10 @@ export default function ManageEventBestPlayersTabContent({
 
         let image: string | undefined;
 
-        if (bestPlayer.image instanceof File) {
+        if (
+          bestPlayer.image instanceof File ||
+          bestPlayer.image instanceof Blob
+        ) {
           const imageName = crypto.randomUUID();
 
           await supabase.storage
@@ -347,7 +389,10 @@ export default function ManageEventBestPlayersTabContent({
 
         let image: string | undefined;
 
-        if (bestPlayer2.image instanceof File) {
+        if (
+          bestPlayer2.image instanceof File ||
+          bestPlayer2.image instanceof Blob
+        ) {
           const imageName = crypto.randomUUID();
 
           await supabase.storage
@@ -371,9 +416,26 @@ export default function ManageEventBestPlayersTabContent({
   function onImageUpload(files: File[], player: "1" | "2") {
     const imageFile = files[0];
 
-    if (player === "1") setBestPlayer({ ...bestPlayer, image: imageFile });
-    else if (player === "2")
+    if (player === "1") {
+      setBestPlayer({ ...bestPlayer, image: imageFile });
+      setCropImagePlayer("1");
+    } else if (player === "2") {
       setBestPlayer2({ ...bestPlayer2, image: imageFile });
+      setCropImagePlayer("2");
+    }
+
+    setCropImageModalOpen(true);
+  }
+
+  function onImageCrop(data: { file: Blob; img: string }) {
+    const { file } = data;
+
+    if (cropImagePlayer === "1")
+      setBestPlayer({ ...bestPlayer, image: file as File });
+    else if (cropImagePlayer === "2")
+      setBestPlayer2({ ...bestPlayer2, image: file as File });
+
+    setCropImageModalOpen(false);
   }
 
   function onImageDelete() {}

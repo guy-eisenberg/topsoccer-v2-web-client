@@ -109,7 +109,6 @@ export default function SignInForm() {
       hideLoading();
 
       const msg = getSigninErrorMessage(err as AuthError);
-      console.log(msg);
 
       if (msg) {
         toast.error(msg);

@@ -23,7 +23,7 @@ export default function QueryTabs({
   return (
     <Tabs
       {...rest}
-      className="flex-initial pb-2"
+      className="min-h-[unset] flex-initial pb-2"
       classNames={{
         ...rest.classNames,
         panel: "hidden",

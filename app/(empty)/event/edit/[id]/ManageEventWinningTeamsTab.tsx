@@ -1,6 +1,7 @@
 "use client";
 
 import { showLoading } from "@/app/components/common/Loader/Loader";
+import CropImageModal from "@/app/components/common/modals/CropImageModal/CropImageModal";
 import { Button } from "@/app/components/core/Button";
 import FileUploader from "@/app/components/core/FileUploader";
 import Input from "@/app/components/core/Input";
@@ -21,14 +22,38 @@ export default function ManageEventWinningTeamsTab({
 }) {
   const router = useRouter();
 
+  const [cropImageModalOpen, setCropImageModalOpen] = useState(false);
+  const [cropImageTeam, setCropImageTeam] = useState<"1" | "2" | undefined>();
+
   const [winningTeam, setWinningTeam] = useState<{
     title: string;
-    image: File | string | undefined;
+    image: File | Blob | string | undefined;
   }>(event.winning_team || { title: "", image: undefined });
   const [winningTeam2, setWinningTeam2] = useState<{
     title: string;
-    image: File | string | undefined;
+    image: File | Blob | string | undefined;
   }>(event.winning_team_2 || { title: "", image: undefined });
+
+  const currentCropImage = (() => {
+    if (cropImageTeam === "1") {
+      if (
+        winningTeam.image === undefined ||
+        typeof winningTeam.image === "string"
+      )
+        return null;
+      return URL.createObjectURL(winningTeam.image);
+    } else if (cropImageTeam === "2") {
+      if (
+        winningTeam2.image === undefined ||
+        typeof winningTeam2.image === "string"
+      )
+        return null;
+
+      return URL.createObjectURL(winningTeam2.image);
+    }
+
+    return null;
+  })();
 
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-2">
@@ -68,9 +93,10 @@ export default function ManageEventWinningTeamsTab({
               <div className="relative flex-1 overflow-hidden rounded-xl">
                 <Image
                   alt="Image Preview"
-                  className="object-cover"
+                  className="object-contain"
                   src={
-                    winningTeam.image instanceof File
+                    winningTeam.image instanceof File ||
+                    winningTeam.image instanceof Blob
                       ? URL.createObjectURL(winningTeam.image)
                       : winningTeam.image
                   }
@@ -115,9 +141,10 @@ export default function ManageEventWinningTeamsTab({
               <div className="relative flex-1 overflow-hidden rounded-xl">
                 <Image
                   alt="Image Preview"
-                  className="object-cover"
+                  className="object-contain"
                   src={
-                    winningTeam2.image instanceof File
+                    winningTeam2.image instanceof File ||
+                    winningTeam2.image instanceof Blob
                       ? URL.createObjectURL(winningTeam2.image)
                       : winningTeam2.image
                   }
@@ -135,6 +162,16 @@ export default function ManageEventWinningTeamsTab({
 
         <CommonActionButtons event={event} />
       </div>
+
+      {currentCropImage && (
+        <CropImageModal
+          aspect={2 / 1}
+          src={currentCropImage}
+          onSave={onImageCrop}
+          isOpen={cropImageModalOpen}
+          onOpenChange={setCropImageModalOpen}
+        />
+      )}
     </div>
   );
 
@@ -212,7 +249,10 @@ export default function ManageEventWinningTeamsTab({
 
         let image: string;
 
-        if (winningTeam.image instanceof File) {
+        if (
+          winningTeam.image instanceof File ||
+          winningTeam.image instanceof Blob
+        ) {
           const imageName = crypto.randomUUID();
 
           await supabase.storage
@@ -236,7 +276,10 @@ export default function ManageEventWinningTeamsTab({
 
         let image: string;
 
-        if (winningTeam2.image instanceof File) {
+        if (
+          winningTeam2.image instanceof File ||
+          winningTeam2.image instanceof Blob
+        ) {
           const imageName = crypto.randomUUID();
 
           await supabase.storage
@@ -263,9 +306,26 @@ export default function ManageEventWinningTeamsTab({
   function onImageUpload(files: File[], team: "1" | "2") {
     const imageFile = files[0];
 
-    if (team === "1") setWinningTeam({ ...winningTeam, image: imageFile });
-    else if (team === "2")
+    if (team === "1") {
+      setWinningTeam({ ...winningTeam, image: imageFile });
+      setCropImageTeam("1");
+    } else if (team === "2") {
       setWinningTeam2({ ...winningTeam2, image: imageFile });
+      setCropImageTeam("2");
+    }
+
+    setCropImageModalOpen(true);
+  }
+
+  function onImageCrop(data: { file: Blob; img: string }) {
+    const { file } = data;
+
+    if (cropImageTeam === "1")
+      setWinningTeam({ ...winningTeam, image: file as File });
+    else if (cropImageTeam === "2")
+      setWinningTeam2({ ...winningTeam2, image: file as File });
+
+    setCropImageModalOpen(false);
   }
 
   function onImageDelete() {}

@@ -13,10 +13,12 @@ import getCroppedImg from "./utils";
 
 export default function CropImageModal({
   src,
+  aspect = 1,
   onSave: _onSave,
   ...rest
 }: {
   src: string;
+  aspect?: number;
   onSave: (data: { file: Blob; img: string }) => void;
 } & Omit<ModalProps, "children">) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -40,7 +42,7 @@ export default function CropImageModal({
                   image={src}
                   crop={crop}
                   zoom={zoom}
-                  aspect={1}
+                  aspect={aspect}
                   onCropChange={setCrop}
                   onZoomChange={setZoom}
                   onCropComplete={(_, croppedAreaPixels) => {

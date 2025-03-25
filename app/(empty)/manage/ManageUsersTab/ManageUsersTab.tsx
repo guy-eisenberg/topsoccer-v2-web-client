@@ -568,12 +568,10 @@ const ManageUsersTab: React.FC<{
     const hideLoading = showLoading();
 
     try {
-      const { error } = await supabase
+      await supabase
         .from("users_readonly_data")
         .update({ can_pay_cash })
         .eq("id", user_id);
-
-      console.log(error);
 
       await revalidate();
 

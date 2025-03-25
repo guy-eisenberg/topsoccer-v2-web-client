@@ -12,12 +12,16 @@ import { useRouter } from "@/context/RouterContext";
 import type { Topsoccer } from "@/types";
 import { calculateEventTitle } from "@/utils/calculateEventTitle";
 import { EVENT_SUBTYPES, EVENT_TYPES } from "@/utils/constants";
-import { getDateTimeInputString } from "@/utils/getDateTimeInputString";
 import { getEventSubTypeLabel } from "@/utils/getEventSubTypeLabel";
-import { getFormattedDate } from "@/utils/getFormattedDate";
-import { isPast } from "@/utils/isPast";
 import toast from "@/utils/toast";
+import { DatePicker } from "@heroui/date-picker";
 import { cn } from "@heroui/theme";
+import {
+  fromDate,
+  getLocalTimeZone,
+  now,
+  ZonedDateTime,
+} from "@internationalized/date";
 import { useMemo, useState } from "react";
 import { upsertEvent as _upsertEvent } from "./actions";
 import CommonActionButtons from "./components/CommonActionButtons";
@@ -50,10 +54,10 @@ export default function ManageEventDetailsTab({
   );
   const [city, setCity] = useState(event?.city || "");
   const [address, setAddress] = useState(event?.address || "");
-  const [dateTime, setDateTime] = useState(
+  const [dateTime, setDateTime] = useState<ZonedDateTime | null>(
     event
-      ? getDateTimeInputString(new Date(event.time).getTime())
-      : new Date().toISOString(),
+      ? fromDate(new Date(event.time), getLocalTimeZone())
+      : now(getLocalTimeZone()),
   );
   const [comment, setComment] = useState(event?.comment || "");
   const [wazeUrl, setWazeUrl] = useState(event?.waze_url || "");
@@ -62,19 +66,13 @@ export default function ManageEventDetailsTab({
 
   const title = useMemo(() => {
     if (city && dateTime && type && subType) {
-      const date = new Date(Date.parse(dateTime));
+      const date = new Date(Date.parse(dateTime.toDate().toISOString()));
 
       return calculateEventTitle(city, date.getDay(), type, subType, comment);
     }
 
     return "";
   }, [city, dateTime, type, subType, comment]);
-
-  const minimumDateString = (() => {
-    const { year, month, day, hour, minute } = getFormattedDate(Date.now());
-
-    return `${year}-${month}-${day}T${hour}:${minute}`;
-  })();
 
   const [workerEmailTerm, setWorkerEmailTerm] = useState("");
 
@@ -200,18 +198,16 @@ export default function ManageEventDetailsTab({
             onChange={(e) => setAddress(e.target.value)}
           />
         </div>
-        <Input
-          className="w-full"
-          min={
-            event && isPast(new Date(event.time).getTime())
-              ? undefined
-              : minimumDateString
-          }
-          placeholder="תאריך ושעה"
-          type="datetime-local"
-          onChange={(e) => setDateTime(e.target.value)}
-          value={dateTime}
-        />
+        <div className="[direction:ltr]" dir="ltr">
+          <DatePicker
+            value={dateTime}
+            onChange={setDateTime}
+            calendarProps={{ style: { direction: "ltr" } }}
+            hourCycle={24}
+            hideTimeZone
+            showMonthAndYearPickers
+          />
+        </div>
         <Input
           className="w-full"
           placeholder="הערות"
@@ -305,7 +301,7 @@ export default function ManageEventDetailsTab({
           description: description ? description : null,
           price,
           max_players: maxPlayers ? maxPlayers : null,
-          time: dateTime,
+          time: dateTime!.toAbsoluteString(),
           title,
           type,
           sub_type: subType,

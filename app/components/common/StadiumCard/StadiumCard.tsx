@@ -126,29 +126,6 @@ const StadiumCard: React.FC<StadiumCardProps> = ({
             </div>
           </div>
         </div>
-        {/* {showImageArrows && stadium.images.length > 1 && (
-          <div
-            className="mx-auto flex gap-2"
-            dir="ltr"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-          >
-            {stadium.images.map((_, i) => (
-              <button
-                className={cn(
-                  "h-3 w-3 rounded-full hover:brightness-90",
-                  i === activatedImageIndex ? "bg-white" : "bg-theme-gray",
-                )}
-                onClick={() => {
-                  setActivatedImageIndex(i);
-                }}
-                key={i}
-              />
-            ))}
-          </div>
-        )} */}
         {showControls && (
           <div className="mt-auto flex gap-2">
             <Link href={`/stadium/edit/${stadium.id}`}>

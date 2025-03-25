@@ -13,7 +13,7 @@ export default function ThemeSwitch() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="flex items-center justify-between gap-4 rounded-xl border-theme-gray bg-theme-light-gray px-3 py-2 md:mt-auto">
+    <div className="flex items-center justify-between gap-4 rounded-xl border border-theme-light-gray bg-default-100 px-3 py-2 md:mt-auto">
       <span className="font-semibold">מצב תאורה:</span>
       <Select
         aria-label="Theme Select"

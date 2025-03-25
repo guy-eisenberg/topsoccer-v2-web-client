@@ -1,7 +1,15 @@
 import { getSessionFromCode, updateSession } from "@/utils/supabase/middleware";
-import { type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
+import { isMaintenance } from "./utils/isMaintenance";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
+  const maintenance = await isMaintenance();
+  if (maintenance) {
+    request.nextUrl.pathname = "/maintenance";
+
+    return NextResponse.rewrite(request.nextUrl);
+  }
+
   const code = request.nextUrl.searchParams.get("code");
 
   if (code) return getSessionFromCode(request, code);

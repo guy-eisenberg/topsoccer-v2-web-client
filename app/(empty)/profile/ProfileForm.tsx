@@ -8,7 +8,13 @@ import Input from "@/app/components/core/Input";
 import { createClient } from "@/clients/supabase/client";
 import type { Topsoccer } from "@/types";
 import toast from "@/utils/toast";
+import { DatePicker } from "@heroui/date-picker";
 import { Skeleton } from "@heroui/skeleton";
+import {
+  fromDate,
+  getLocalTimeZone,
+  toCalendarDate,
+} from "@internationalized/date";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -40,7 +46,11 @@ export default function ProfileForm({
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number || "");
   const [email, setEmail] = useState(user.email || "");
   const [city, setCity] = useState(user.city || "");
-  const [birthDate, setBirthDate] = useState(user.birth_date || "");
+  const [birthDate, setBirthDate] = useState(
+    user.birth_date
+      ? toCalendarDate(fromDate(new Date(user.birth_date), getLocalTimeZone()))
+      : null,
+  );
 
   useEffect(() => {
     const status = searchParams.get("status");
@@ -149,12 +159,10 @@ export default function ProfileForm({
             />
           </Skeleton>
           <Skeleton className="rounded-xl" isLoaded={!loading}>
-            <Input
+            <DatePicker
               className="w-full"
-              type="date"
-              value={birthDate || ""}
-              onChange={(e) => setBirthDate(e.target.value)}
-              placeholder="תאריך לידה"
+              value={birthDate}
+              onChange={setBirthDate}
             />
           </Skeleton>
         </div>
@@ -250,7 +258,7 @@ export default function ProfileForm({
         phone_number: phoneNumber ? phoneNumber : null,
         email,
         city: city ? city : null,
-        birth_date: birthDate ? birthDate : null,
+        birth_date: birthDate ? birthDate.toString() : null,
       });
 
       toast.success("פרטים עודכנו בהצלחה!");

@@ -37,7 +37,7 @@ export default function ManageEventImagesTab({
   }, [event]);
 
   return (
-    <div className="flex h-full min-h-0 flex-col gap-2">
+    <div className="flex h-full min-h-0 flex-1 flex-col gap-2">
       <p className="text-lg font-semibold">מדיה:</p>
       <div className="flex h-full min-h-0 flex-1 flex-col gap-2 md:flex-row">
         <FileUploader
@@ -55,9 +55,9 @@ export default function ManageEventImagesTab({
           />
         )}
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-between gap-4">
         <div className="flex gap-2">
-          <Button color="primary" onPress={updateImages}>
+          <Button className="shrink-0" color="primary" onPress={updateImages}>
             שמור תמונות
           </Button>
         </div>

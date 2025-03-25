@@ -22,7 +22,7 @@ export default function ManageEventCancelsTabContent({
   const router = useRouter();
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className="flex min-h-0 flex-1 flex-col gap-2">
       <div className="grid min-h-0 grid-cols-1 gap-2 overflow-y-auto md:grid-cols-4">
         {players_cancels.map((player) => (
           <ManageCancelCard

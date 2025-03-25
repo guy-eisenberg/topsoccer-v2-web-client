@@ -259,8 +259,12 @@ export default function ManageEventBestPlayersTabContent({
           </div>
         )}
       </div>
-      <div className="flex justify-between">
-        <Button color="primary" onClick={updateBestPlayers}>
+      <div className="flex justify-between gap-4">
+        <Button
+          className="shrink-0"
+          color="primary"
+          onClick={updateBestPlayers}
+        >
           שמירת מלכי השערים
         </Button>
         <CommonActionButtons event={event} />

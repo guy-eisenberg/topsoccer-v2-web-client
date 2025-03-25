@@ -89,8 +89,8 @@ export default function ManageEventVideosTab({
           </Button>
         </div>
       </div>
-      <div className="flex justify-between">
-        <Button color="primary" onClick={updateVideos}>
+      <div className="flex justify-between gap-4">
+        <Button className="shrink-0" color="primary" onClick={updateVideos}>
           שמור סרטונים
         </Button>
 

@@ -155,8 +155,12 @@ export default function ManageEventWinningTeamsTab({
           </div>
         </div>
       </div>
-      <div className="flex justify-between">
-        <Button color="primary" onPress={updateWinningTeams}>
+      <div className="flex justify-between gap-4">
+        <Button
+          className="shrink-0"
+          color="primary"
+          onPress={updateWinningTeams}
+        >
           שמור קבוצות מנצחות
         </Button>
 

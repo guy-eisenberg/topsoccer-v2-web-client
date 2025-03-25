@@ -183,8 +183,8 @@ export default function ManageEventMapTabContent({
           />
         </div>
       </div>
-      <div className="flex justify-between">
-        <Button color="primary" onPress={updateMap}>
+      <div className="flex justify-between gap-4">
+        <Button className="shrink-0" color="primary" onPress={updateMap}>
           שמור את נבחרת המחזור
         </Button>
         <CommonActionButtons event={event} />

@@ -282,8 +282,8 @@ export default function ManageEventDetailsTab({
           </>
         )}
       </div>
-      <div className="flex justify-between">
-        <Button color="primary" type="submit">
+      <div className="flex justify-between gap-4">
+        <Button className="shrink-0" color="primary" type="submit">
           {event ? "שמור שינויים" : "צור אירוע"}
         </Button>
         {event && <CommonActionButtons event={event} />}

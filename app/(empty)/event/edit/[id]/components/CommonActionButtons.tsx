@@ -27,25 +27,27 @@ export default function CommonActionButtons({
 
   return (
     <>
-      <div className="flex gap-2">
+      <div className="flex gap-2 overflow-x-auto scrollbar-hide">
         <Link href={`/event/${event.id}`}>
           <Button color="secondary" endContent={<IconShare3 />}>
             לדף המשחק
           </Button>
         </Link>
         <Button
+          className="shrink-0"
           color="primary"
           onPress={() => setGeneratePaymentLinkModalOpen(true)}
         >
           צור לינק לתשלום
         </Button>
-        <Button color="warning" onPress={setEventFull}>
+        <Button className="shrink-0" color="warning" onPress={setEventFull}>
           {event.full ? "פתח רשימה" : "סגור רשימה"}
         </Button>
-        <Button color="secondary" onPress={duplicateEvent}>
+        <Button className="shrink-0" color="secondary" onPress={duplicateEvent}>
           שכפל משחק
         </Button>
         <Button
+          className="shrink-0"
           color={event.canceled ? "secondary" : "danger"}
           onPress={setEventCanceled}
         >

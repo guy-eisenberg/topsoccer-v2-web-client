@@ -7,12 +7,13 @@ import { Button } from "@/app/components/core/Button";
 import DatePicker from "@/app/components/core/DatePicker";
 import Input from "@/app/components/core/Input";
 import { createClient } from "@/clients/supabase/client";
+import { useRouter } from "@/context/RouterContext";
 import type { Topsoccer } from "@/types";
 import { TIMEZONE } from "@/utils/constants";
 import toast from "@/utils/toast";
 import { Skeleton } from "@heroui/skeleton";
 import { fromDate, toCalendarDate } from "@internationalized/date";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   deleteAvatar as _deleteAvatar,
@@ -206,19 +207,6 @@ export default function ProfileForm({
     </main>
   );
 
-  function onImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.files && e.target.files.length > 0) {
-      currentFile.current = e.target.files[0];
-
-      const imageUrl = URL.createObjectURL(currentFile.current);
-
-      e.target.value = "";
-
-      setPhotoURL(imageUrl);
-      setCropImageModalOpen(true);
-    }
-  }
-
   function onImageCrop(data: { file: Blob; img: string }) {
     const { file, img } = data;
 
@@ -258,10 +246,16 @@ export default function ProfileForm({
         birth_date: birthDate ? birthDate.toString() : null,
       });
 
-      toast.success("פרטים עודכנו בהצלחה!");
+      if (nextPageUrl.current) {
+        await router.replace(nextPageUrl.current);
 
-      if (nextPageUrl.current) router.replace(nextPageUrl.current);
-      else router.back();
+        if (!nextPageUrl.current.startsWith("/insurance-statement"))
+          toast.success("פרטים עודכנו בהצלחה!");
+      } else {
+        await router.replace("/");
+
+        toast.success("פרטים עודכנו בהצלחה!");
+      }
     } catch (err) {
       console.log(err);
       toast.error();
@@ -269,6 +263,19 @@ export default function ProfileForm({
       return Promise.reject(err);
     } finally {
       hideLoading();
+    }
+  }
+
+  function onImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files && e.target.files.length > 0) {
+      currentFile.current = e.target.files[0];
+
+      const imageUrl = URL.createObjectURL(currentFile.current);
+
+      e.target.value = "";
+
+      setPhotoURL(imageUrl);
+      setCropImageModalOpen(true);
     }
   }
 

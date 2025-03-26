@@ -5,9 +5,10 @@ import { Button } from "@/app/components/core/Button";
 import Input from "@/app/components/core/Input";
 import { Select } from "@/app/components/core/Select";
 import { SelectItem } from "@/app/components/core/SelectItem";
+import { useRouter } from "@/context/RouterContext";
 import type { Topsoccer } from "@/types";
 import toast from "@/utils/toast";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { updateInsuranceStatement as _updateInsuranceStatement } from "./actions";
 
@@ -58,7 +59,7 @@ export default function InsuranceStatementForm({
     const status = searchParams.get("status");
 
     if (status === "data-missing") {
-      toast.warning("יש למלא הצהרת בריאות.");
+      toast.warning("יש למלא הצהרת ביטוח.");
 
       const next = searchParams.get("next");
       if (next) nextPageUrl.current = decodeURIComponent(next);
@@ -230,10 +231,10 @@ export default function InsuranceStatementForm({
         tz_id: tzId,
       });
 
-      toast.success("שינויים נשמרו בהצלחה!");
+      if (nextPageUrl.current) await router.replace(nextPageUrl.current);
+      else await router.replace("/");
 
-      if (nextPageUrl.current) router.replace(nextPageUrl.current);
-      else router.replace("/");
+      toast.success("הצהרת ביטוח נשמרה בהצלחה!");
     } catch (err) {
       console.log(err);
       toast.error();

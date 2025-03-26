@@ -19,6 +19,7 @@ import WinningTeamCard from "@/app/components/common/WinningTeamCard";
 import { Button } from "@/app/components/core/Button";
 import Tabs from "@/app/components/core/Tabs";
 import { createClient } from "@/clients/supabase/client";
+import { useRouter } from "@/context/RouterContext";
 import type { Topsoccer } from "@/types";
 import { getFormattedDate } from "@/utils/getFormattedDate";
 import { isPast } from "@/utils/isPast";
@@ -34,7 +35,6 @@ import {
   IconVideo,
 } from "@tabler/icons-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   enrollEvent as _enrollEvent,
@@ -828,19 +828,9 @@ export default function EventPageContent({
       .single<string | null>();
 
     if (nextUrl) {
-      toast.dismiss();
+      await parseNextUrls(nextUrl);
+
       hideLoading();
-
-      const urls = nextUrl.split("&next=");
-
-      if (urls.length === 1)
-        router.replace(
-          `${urls[0]}?status=data-missing&next=/event/${event.id}`,
-        );
-      else
-        router.replace(
-          `${urls[0]}?status=data-missing&next=${encodeURIComponent(`${urls[1]}?status=data-missing&next=/event/${event.id}`)}`,
-        );
 
       return;
     }
@@ -866,6 +856,19 @@ export default function EventPageContent({
   async function enrollWaitingList() {
     toast.loading();
     const hideLoading = showLoading();
+
+    const supabase = createClient();
+    const { data: nextUrl } = await supabase
+      .rpc("z2_check_eligibility")
+      .single<string | null>();
+
+    if (nextUrl) {
+      await parseNextUrls(nextUrl);
+
+      hideLoading();
+
+      return;
+    }
 
     try {
       const url = await _enrollEvent({
@@ -939,5 +942,18 @@ export default function EventPageContent({
 
       return Promise.reject(err);
     }
+  }
+
+  async function parseNextUrls(nextUrl: string) {
+    const urls = nextUrl.split("&next=");
+
+    if (urls.length === 1)
+      await router.replace(
+        `${urls[0]}?status=data-missing&next=/event/${event.id}`,
+      );
+    else
+      await router.replace(
+        `${urls[0]}?status=data-missing&next=${encodeURIComponent(`${urls[1]}?status=data-missing&next=/event/${event.id}`)}`,
+      );
   }
 }

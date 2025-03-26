@@ -613,7 +613,7 @@ export default function EventPageContent({
                 <Tab key="formation" title="נבחרת המחזור">
                   <div className="py-3">
                     <SoccerMap
-                      className="h-[700px] flex-1 overflow-hidden rounded-xl border border-transparent md:hidden"
+                      className="w-full flex-1 overflow-hidden rounded-xl border border-transparent md:hidden"
                       players={event.map}
                     />
                     <SoccerMap

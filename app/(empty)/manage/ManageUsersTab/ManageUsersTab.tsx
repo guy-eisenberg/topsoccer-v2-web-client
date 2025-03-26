@@ -398,14 +398,14 @@ const ManageUsersTab: React.FC<{
           placeholder="חפש לפי שם, אימייל ועוד..."
         />
         <Button
-          className="w-20 border border-theme-light-gray bg-white hover:border-theme-green dark:bg-default-100"
+          className="border border-theme-light-gray bg-white hover:border-theme-green dark:bg-default-100 md:w-20"
           onPress={() => setFilterModalOpen(true)}
           isIconOnly
         >
           <IconFilter />
         </Button>
         <Button
-          className="w-20 border border-theme-light-gray bg-white hover:border-theme-green dark:bg-default-100"
+          className="border border-theme-light-gray bg-white hover:border-theme-green dark:bg-default-100 md:w-20"
           onPress={() => setExcelModalOpen(true)}
           isIconOnly
         >

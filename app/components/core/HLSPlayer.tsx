@@ -69,7 +69,11 @@ export default function HLSPlayer({
   }, [onVideoPause, onVideoPlay]);
 
   return (
-    <Skeleton className="h-full w-full rounded-xl" isLoaded={!loading}>
+    <Skeleton
+      className="h-full w-full rounded-xl"
+      classNames={{ content: "h-full" }}
+      isLoaded={!loading}
+    >
       <video
         {...rest}
         className="h-full w-full rounded-xl object-cover"

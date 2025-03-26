@@ -103,7 +103,7 @@ const ManageUsersTab: React.FC<{
         _events_min_date: events_min_date || null,
         _events_max_date: events_max_date || null,
         _order_col: sort?.column || null,
-        _order_dir: sort?.direction === "descending" ? "desc" : "asc",
+        _order_dir: sort?.direction === "ascending" ? "asc" : "desc",
         _page: page,
         _page_size: PAGE_SIZE,
       })) as { data: GetUserResult[] };

@@ -3,6 +3,7 @@
 import { showLoading } from "@/app/components/common/Loader/Loader";
 import PlayerCard from "@/app/components/common/PlayerCard";
 import { Button } from "@/app/components/core/Button";
+import DatePicker from "@/app/components/core/DatePicker";
 import Input from "@/app/components/core/Input";
 import { Select } from "@/app/components/core/Select";
 import { SelectItem } from "@/app/components/core/SelectItem";
@@ -14,7 +15,6 @@ import { calculateEventTitle } from "@/utils/calculateEventTitle";
 import { EVENT_SUBTYPES, EVENT_TYPES, TIMEZONE } from "@/utils/constants";
 import { getEventSubTypeLabel } from "@/utils/getEventSubTypeLabel";
 import toast from "@/utils/toast";
-import { DatePicker } from "@heroui/date-picker";
 import { cn } from "@heroui/theme";
 import { fromDate, now, ZonedDateTime } from "@internationalized/date";
 import { useMemo, useState } from "react";
@@ -193,11 +193,8 @@ export default function ManageEventDetailsTab({
         </div>
         <div dir="ltr">
           <DatePicker
-            classNames={{
-              input: "text-base",
-            }}
             value={dateTime}
-            onChange={setDateTime}
+            onChange={setDateTime as any}
             calendarProps={{ style: { direction: "ltr" } }}
             hourCycle={24}
             hideTimeZone

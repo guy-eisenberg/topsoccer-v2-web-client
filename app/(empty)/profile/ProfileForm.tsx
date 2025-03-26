@@ -4,12 +4,12 @@ import { showLoading } from "@/app/components/common/Loader/Loader";
 import CropImageModal from "@/app/components/common/modals/CropImageModal/CropImageModal";
 import PlayerAvatar from "@/app/components/common/PlayerAvatar";
 import { Button } from "@/app/components/core/Button";
+import DatePicker from "@/app/components/core/DatePicker";
 import Input from "@/app/components/core/Input";
 import { createClient } from "@/clients/supabase/client";
 import type { Topsoccer } from "@/types";
 import { TIMEZONE } from "@/utils/constants";
 import toast from "@/utils/toast";
-import { DatePicker } from "@heroui/date-picker";
 import { Skeleton } from "@heroui/skeleton";
 import { fromDate, toCalendarDate } from "@internationalized/date";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -157,12 +157,9 @@ export default function ProfileForm({
           </Skeleton>
           <Skeleton className="rounded-xl" isLoaded={!loading}>
             <DatePicker
-              classNames={{
-                input: "text-base",
-              }}
               className="w-full"
               value={birthDate}
-              onChange={setBirthDate}
+              onChange={setBirthDate as any}
             />
           </Skeleton>
         </div>

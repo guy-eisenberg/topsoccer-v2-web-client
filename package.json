@@ -27,7 +27,7 @@
     "axios": "^1.8.4",
     "contentful": "^11.5.11",
     "editorjs-html": "^4.0.5",
-    "framer-motion": "^12.6.0",
+    "framer-motion": "^12.6.1",
     "hls.js": "^1.5.20",
     "interactjs": "^1.10.27",
     "lottie-react": "^2.4.1",

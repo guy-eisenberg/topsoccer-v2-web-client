@@ -31,6 +31,7 @@ export default function ForgotPasswordForm() {
         <Input
           className="mt-2"
           placeholder="דואר אלקטרוני"
+          type="email"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);

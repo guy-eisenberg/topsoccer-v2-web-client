@@ -17,6 +17,7 @@ import { splitDate } from "@/utils/splitDate";
 import toast from "@/utils/toast";
 import { DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/dropdown";
 import { Pagination } from "@heroui/pagination";
+import { Button as _Button } from "@heroui/react";
 import {
   Table,
   TableBody,
@@ -372,9 +373,9 @@ const ManageUsersTab: React.FC<{
                 <TableCell>
                   <Dropdown>
                     <DropdownTrigger>
-                      <Button variant="bordered" size="sm" isIconOnly>
+                      <_Button variant="bordered" size="sm" isIconOnly>
                         <IconDots className="h-5 w-5" />
-                      </Button>
+                      </_Button>
                     </DropdownTrigger>
                     <DropdownMenu>{actions}</DropdownMenu>
                   </Dropdown>

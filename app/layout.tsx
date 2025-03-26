@@ -1,13 +1,9 @@
-import RouterProvider from "@/context/RouterContext";
-import { HeroUIProvider } from "@heroui/system";
-import { ToastProvider } from "@heroui/toast";
-import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
-import { ThemeProvider } from "next-themes";
 import { Suspense } from "react";
 import Loader from "./components/common/Loader/Loader";
 import StatusToast from "./components/common/StatusToast";
 import "./globals.css";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "Topsoccer - הטופ של אירועי הכדורגל!",
@@ -29,17 +25,13 @@ export default function RootLayout({
         className="flex flex-1 flex-col bg-gradient-to-br from-theme-bg via-theme-green/15 to-theme-bg md:h-full"
         dir="rtl"
       >
-        <ThemeProvider defaultTheme="dark" attribute="class">
-          <HeroUIProvider className="flex flex-1 flex-col md:h-full">
-            <ToastProvider placement="top-center" />
-            <Suspense>
-              <StatusToast />
-            </Suspense>
-            <RouterProvider>{children}</RouterProvider>
-            <Loader />
-          </HeroUIProvider>
-        </ThemeProvider>
-        <Analytics />
+        <Providers>
+          <Suspense>
+            <StatusToast />
+          </Suspense>
+          {children}
+          <Loader />
+        </Providers>
       </body>
     </html>
   );

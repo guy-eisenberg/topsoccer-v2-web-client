@@ -44,42 +44,48 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
     <div
       {...rest}
       className={cn(
-        "relative flex justify-between overflow-hidden rounded-xl border border-theme-light-gray bg-white hover:border-theme-green dark:bg-[#3f3f46]",
+        "relative flex flex-col justify-between overflow-hidden rounded-xl border border-theme-light-gray bg-white hover:border-theme-green dark:bg-[#3f3f46] md:flex-row md:gap-4",
         rest.className,
       )}
     >
-      <div className="ml-4 flex items-center">
+      <div className="flex items-center border-b border-theme-light-gray md:border-none">
         <PlayerAvatar
           className="h-10 w-10"
           src={player.photo_url}
           disableCache={false}
         />
 
-        <div className="mr-3 flex items-center gap-2">
-          {group && <GroupIcon color={group} />}
-          {mvp && (
-            <Tooltip content="מקום ראשון">
-              <MVPIcon className="h-6 w-6" />
-            </Tooltip>
-          )}
-          {goalsKing && (
-            <Tooltip content="מלך השערים">
-              <GoalsKingIcon className="h-6 w-6" />
-            </Tooltip>
-          )}
-          <p>
-            {!mvp && !goalsKing && `${index + 1}. `}
-            {player.display_name}
-          </p>
+        <div className="flex items-center gap-3 pr-2">
+          <div className="flex items-center gap-2">
+            {group && <GroupIcon color={group} />}
+            <div className="flex">
+              {mvp && (
+                <Tooltip content="מקום ראשון">
+                  <MVPIcon className="h-5 w-5" />
+                </Tooltip>
+              )}
+              {goalsKing && (
+                <Tooltip content="מלך השערים">
+                  <GoalsKingIcon className="h-5 w-5" />
+                </Tooltip>
+              )}
+            </div>
+            <p>
+              {!mvp && !goalsKing && (
+                <span className="text-theme-green">{index + 1}. </span>
+              )}
+              {player.display_name}
+            </p>
+          </div>
           {player.is_goalkeeper && (
-            <p className="mr-4 font-medium text-theme-green">שוער</p>
+            <p className="text-xs font-medium text-theme-green">שוער</p>
           )}
         </div>
       </div>
       {showStats && (
-        <div className="flex justify-between gap-2 p-2 font-medium text-theme-green">
+        <div className="flex flex-row-reverse justify-between gap-2 p-2 font-medium text-theme-green">
           <Tooltip content="כמות שערים">
-            <div className="flex items-center gap-1 rounded-lg border border-transparent bg-default-100 px-[6px] hover:border-theme-green">
+            <div className="flex items-center gap-1 rounded-lg border border-transparent bg-default-100 px-[6px] py-1 hover:border-theme-green md:py-0">
               <GoalIcon className="h-[14px] w-[14px]" />
 
               <p className="w-3 text-sm leading-[14px]">{player.goals || 0}</p>
@@ -88,7 +94,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
           {player.is_goalkeeper && (
             <>
               <Tooltip content="הצלות פנדלים">
-                <div className="flex items-center gap-1 rounded-lg border border-transparent bg-default-100 px-[6px] hover:border-theme-green">
+                <div className="flex items-center gap-1 rounded-lg border border-transparent bg-default-100 px-[6px] py-1 hover:border-theme-green md:py-0">
                   <PenaltyIcon className="h-4 w-4" />
 
                   <p className="w-3 text-sm leading-4">
@@ -97,7 +103,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
                 </div>
               </Tooltip>
               <Tooltip content="רשת נקייה">
-                <div className="flex items-center gap-1 rounded-lg border border-transparent bg-default-100 px-[6px] hover:border-theme-green">
+                <div className="flex items-center gap-1 rounded-lg border border-transparent bg-default-100 px-[6px] py-1 hover:border-theme-green md:py-0">
                   <CleanNetIcon className="h-4 w-4" />
 
                   <p className="w-3 text-sm leading-4">

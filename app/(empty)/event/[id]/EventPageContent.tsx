@@ -657,16 +657,20 @@ export default function EventPageContent({
                       {inWaitingList && (
                         <Chip
                           className="inline-flex h-8 gap-2 border border-warning bg-warning/10 px-2 text-xs text-warning"
-                          classNames={{ content: "pl-0" }}
-                          endContent={<IconClock className="ml-2 h-4 w-4" />}
+                          classNames={{ content: "md:pl-0" }}
+                          endContent={
+                            <IconClock className="ml-2 hidden h-4 w-4 md:block" />
+                          }
                         >
                           <p className="font-semibold">ברשימת המתנה</p>
                         </Chip>
                       )}
                       <Chip
                         className="inline-flex h-8 max-w-[unset] gap-2 border border-theme-green bg-theme-green/10 px-2 text-xs text-theme-green"
-                        classNames={{ content: "pl-0" }}
-                        endContent={<IconUsersGroup className="ml-2 h-4 w-4" />}
+                        classNames={{ content: "md:pl-0" }}
+                        endContent={
+                          <IconUsersGroup className="ml-2 hidden h-4 w-4 md:block" />
+                        }
                       >
                         <span className="font-semibold">
                           {event.players.length || 0}

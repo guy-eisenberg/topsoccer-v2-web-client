@@ -21,7 +21,13 @@ export async function POST(request: Request) {
 
       if (!payment) throw new Error();
 
-      if (payment.status === "Waiting" || payment.status === "Canceled") {
+      if (
+        payment.method === "Cash" ||
+        payment.method === "Manual" ||
+        payment.method === "Team" ||
+        payment.status === "Waiting" ||
+        payment.status === "Canceled"
+      ) {
         const [{ data: event }, { data: user }] = await Promise.all([
           supabase.from("events").select().eq("id", payment.event_id).single(),
           supabase.from("users").select().eq("id", payment.user_id).single(),

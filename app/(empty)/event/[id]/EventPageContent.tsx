@@ -605,6 +605,7 @@ export default function EventPageContent({
           )}
         </div>
         <Tabs
+          className="min-w-0"
           classNames={{
             panel:
               "border border-t-0 border-theme-light-gray bg-theme-card p-3 flex-1 rounded-b-xl",
@@ -619,8 +620,8 @@ export default function EventPageContent({
             <div className="flex min-h-0 flex-1 flex-col rounded-b-xl">
               <div className="flex min-h-0 flex-1 flex-col gap-2">
                 <div className="flex gap-2">
-                  <div className="flex flex-1 gap-2 overflow-x-auto">
-                    {event?.sub_type === "Singles" &&
+                  <div className="flex items-start gap-2 overflow-x-auto">
+                    {event.sub_type === "Singles" &&
                       showGroups &&
                       event.groups.map((group) => (
                         <div
@@ -644,7 +645,7 @@ export default function EventPageContent({
                         </div>
                       ))}
                   </div>
-                  <div className="flex flex-col items-end gap-2 text-sm">
+                  <div className="mr-auto flex flex-wrap gap-2 text-sm">
                     {true && (
                       <Chip
                         className="inline-flex h-8 gap-2 border border-warning bg-warning/10 px-2 text-xs text-warning"
@@ -762,6 +763,17 @@ export default function EventPageContent({
             </Tab>
           )}
         </Tabs>
+
+        <div className="relative h-[320px] md:hidden">
+          <a href="https://shirt4u.co.il" target="_blank">
+            <Image
+              alt="Banner"
+              className="rounded-xl object-cover"
+              src={banners[currentBannerIndex]}
+              fill
+            />
+          </a>
+        </div>
 
         <ImageExpandModal
           src={expandedImage || ""}

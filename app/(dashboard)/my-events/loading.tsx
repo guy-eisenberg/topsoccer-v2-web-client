@@ -1,5 +1,5 @@
 import { Skeleton } from "@heroui/skeleton";
 
 export default function MyEventsPageLoading() {
-  return <Skeleton className="h-full w-full rounded-xl" />;
+  return <Skeleton className="h-screen md:h-full md:rounded-xl" />;
 }

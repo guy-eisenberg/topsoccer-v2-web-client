@@ -189,7 +189,7 @@ export default async function PlayerPage({
 
                 return (
                   <Link href={`/event/${event.id}`} key={event.id}>
-                    <div className="flex justify-between rounded-xl border border-theme-light-gray bg-white p-2 hover:border-theme-green">
+                    <div className="flex justify-between rounded-xl border border-theme-light-gray bg-theme-foreground p-2 hover:border-theme-green">
                       <div className="flex gap-2">
                         <div className="flex flex-col">
                           <p className="text-sm">
@@ -279,7 +279,6 @@ async function fetchData(user_id: string, trunc: string) {
       penalty_saved: number;
       clean_net: number;
       is_goalking: boolean;
-      in_map: boolean;
       is_mvp: boolean;
     }[];
   } | null;

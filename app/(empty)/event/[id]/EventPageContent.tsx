@@ -646,7 +646,7 @@ export default function EventPageContent({
                       ))}
                   </div>
                   <div className="mr-auto flex flex-wrap gap-2 text-sm">
-                    {true && (
+                    {inWaitingList && (
                       <Chip
                         className="inline-flex h-8 gap-2 border border-warning bg-warning/10 px-2 text-xs text-warning"
                         classNames={{ content: "pl-0" }}

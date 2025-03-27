@@ -1,6 +1,5 @@
 "use client";
 
-import isSafariAgent from "@/utils/isSafariAgent";
 import { Skeleton } from "@heroui/skeleton";
 import Hls from "hls.js";
 import { useEffect, useRef, useState } from "react";
@@ -28,7 +27,7 @@ export default function HLSPlayer({
 
     let hls: Hls;
 
-    if (Hls.isSupported() && !isSafariAgent()) {
+    if (Hls.isSupported()) {
       hls = new Hls({ enableWorker: true });
       hls.loadSource(src);
       hls.attachMedia(videoPlayer.current);

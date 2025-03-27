@@ -412,7 +412,7 @@ export default function EventPageContent({
                   <Tabs
                     classNames={{
                       panel:
-                        "p-0 h-64 border border-theme-light-gray rounded-b-xl border-t-0",
+                        "p-0 h-72 border border-theme-light-gray rounded-b-xl border-t-0",
                     }}
                     selectedKey={topTab}
                     onSelectionChange={(key) => {
@@ -592,7 +592,7 @@ export default function EventPageContent({
             </div>
           </div>
           {banners.length > 0 && (
-            <div className="relative hidden flex-1 md:block">
+            <div className="relative hidden max-h-[320px] flex-1 md:block">
               <a href="https://shirt4u.co.il" target="_blank">
                 <Image
                   alt="Banner"

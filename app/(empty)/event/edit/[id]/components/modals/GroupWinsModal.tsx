@@ -34,7 +34,7 @@ const GroupWinsModal: React.FC<GropuWinsModalProps> = ({
             <ModalBody>
               <Input
                 type="number"
-                value={value.toString()}
+                value={value === 0 ? "" : value.toString()}
                 onChange={(e) => setValue(parseInt(e.target.value))}
               />
             </ModalBody>

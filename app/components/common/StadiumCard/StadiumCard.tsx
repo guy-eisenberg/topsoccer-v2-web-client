@@ -74,10 +74,10 @@ const StadiumCard: React.FC<StadiumCardProps> = ({
       </div>
 
       <div className="relative flex w-full flex-col">
-        <div className="flex items-center gap-4">
-          <b className="text-2xl">{stadium.name}</b>
+        <div className="flex items-center justify-between">
+          <b className="text-xl">{stadium.name}</b>
           <div className="flex items-center gap-1 text-white">
-            <IconMapPin width={16} height={16} />
+            <IconMapPin width={14} height={14} />
             <span className="text-sm">
               {stadium.address}, {stadium.city}
             </span>

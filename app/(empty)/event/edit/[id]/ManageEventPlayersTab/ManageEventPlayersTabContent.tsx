@@ -431,15 +431,17 @@ export default function ManageEventPlayersTabContent({
           </Button>
         </div>
       </div>
-      <div className="flex items-center justify-between md:justify-start">
+      <div className="flex justify-between">
         <div className="flex flex-wrap gap-2">
-          <Button
-            color="primary"
-            onPress={() => setGroupsWhatsappTemplateModalOpen(true)}
-          >
-            העתק לווטסאפ
-          </Button>
-          {groups.length > 0 && (
+          {!selectMode && (
+            <Button
+              color="primary"
+              onPress={() => setGroupsWhatsappTemplateModalOpen(true)}
+            >
+              העתק לווטסאפ
+            </Button>
+          )}
+          {!selectMode && groups.length > 0 && (
             <Button
               color="warning"
               onPress={() => setResetGroupsModalOpen(true)}
@@ -447,7 +449,7 @@ export default function ManageEventPlayersTabContent({
               אפס קבוצות
             </Button>
           )}
-          {!past && (
+          {!selectMode && !past && (
             <Button
               color="primary"
               onPress={() => revealGroups(!event.reveal_groups)}
@@ -456,34 +458,8 @@ export default function ManageEventPlayersTabContent({
             </Button>
           )}
         </div>
-        <div className="flex max-w-full gap-3 overflow-x-auto px-2 scrollbar-hide">
-          {groups.map((group) => (
-            <div className="flex shrink-0 flex-col gap-2" key={group.name}>
-              <div className="flex items-center gap-2">
-                <GroupIcon className="!h-6 !w-6" color={group.name} />
-                <p>{group.players ? group.players.length : 0} שחקנים</p>
-              </div>
 
-              {past && (
-                <>
-                  <p className="text-sm text-theme-gray">
-                    {group.wins || 0} נצחונות
-                  </p>
-                  <Button
-                    color="secondary"
-                    onPress={() => {
-                      setSelectedGroup(group);
-                      setGroupWinsModalOpen(true);
-                    }}
-                  >
-                    הכנס נצחונות
-                  </Button>
-                </>
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="mr-auto flex gap-4">
+        <div className="mr-auto flex gap-2">
           {selectMode && Object.keys(selectedPlayersIds).length > 0 && (
             <Button
               color="primary"
@@ -503,6 +479,36 @@ export default function ManageEventPlayersTabContent({
             {selectMode ? "בטל בחירה מרובה" : "בחירה מרובה"}
           </Button>
         </div>
+      </div>
+      <div className="flex shrink-0 gap-3 overflow-x-auto scrollbar-hide">
+        {groups.map((group) => (
+          <div
+            className="flex shrink-0 cursor-pointer flex-col gap-2 overflow-hidden rounded-xl border border-theme-light-gray bg-theme-card px-3 py-2 hover:border-theme-green"
+            onClick={() => {
+              setSelectedGroup(group);
+              setGroupWinsModalOpen(true);
+            }}
+            key={group.name}
+          >
+            <div className="flex items-center gap-2">
+              <GroupIcon className="!h-6 !w-6" color={group.name} />
+              <p className="font-medium">
+                {group.players ? group.players.length : 0} שחקנים
+              </p>
+            </div>
+            <p className="text-sm text-theme-gray">{group.wins || 0} נצחונות</p>
+            {/* <Button
+              size="sm"
+              color="secondary"
+              onPress={() => {
+                setSelectedGroup(group);
+                setGroupWinsModalOpen(true);
+              }}
+            >
+              הכנס נצחונות
+            </Button> */}
+          </div>
+        ))}
       </div>
       <div className="grid min-h-0 grid-cols-1 gap-2 overflow-y-auto scrollbar-hide md:grid-cols-4">
         {playersList}

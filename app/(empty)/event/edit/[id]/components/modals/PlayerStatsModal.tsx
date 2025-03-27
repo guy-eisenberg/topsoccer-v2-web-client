@@ -55,7 +55,7 @@ const PlayerStatsModal: React.FC<PlayerStatsModalProps> = ({
                     className="w-24"
                     type="number"
                     min={0}
-                    value={goals.toString()}
+                    value={goals === 0 ? "" : goals.toString()}
                     onChange={(e) => setGoals(parseInt(e.target.value))}
                   />
                 </div>
@@ -87,7 +87,9 @@ const PlayerStatsModal: React.FC<PlayerStatsModalProps> = ({
                         className="flex-1"
                         type="number"
                         min={0}
-                        value={penaltySaved.toString()}
+                        value={
+                          penaltySaved === 0 ? "" : penaltySaved.toString()
+                        }
                         disabled={!isGoalkeeper}
                         onChange={(e) =>
                           setPenaltySaved(parseInt(e.target.value))
@@ -105,7 +107,7 @@ const PlayerStatsModal: React.FC<PlayerStatsModalProps> = ({
                         className="flex-1"
                         type="number"
                         min={0}
-                        value={cleanNet.toString()}
+                        value={cleanNet === 0 ? "" : cleanNet.toString()}
                         disabled={!isGoalkeeper}
                         onChange={(e) => setCleanNet(parseInt(e.target.value))}
                       />

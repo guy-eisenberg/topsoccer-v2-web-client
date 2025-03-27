@@ -3,7 +3,7 @@
 import { showLoading } from "@/app/components/common/Loader/Loader";
 import { useEffect } from "react";
 
-export default function EventPageLoading() {
+export default function LoadingPage() {
   useEffect(() => {
     const hideLoading = showLoading();
 

@@ -565,7 +565,7 @@ export default function EventPageContent({
           className="min-w-0"
           classNames={{
             panel:
-              "border border-t-0 border-theme-light-gray bg-theme-card p-3 flex-1 rounded-b-xl",
+              "border border-t-0 flex flex-col border-theme-light-gray bg-theme-card p-3 flex-1 rounded-b-xl",
           }}
           selectedKey={leftTab}
           onSelectionChange={(key) => {

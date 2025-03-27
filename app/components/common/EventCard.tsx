@@ -21,7 +21,6 @@ const EventCard: React.FC<EventCardProps> = ({
 
   const time = getFormattedDate(dateTime);
 
-  // const past = isPast(dateTime);
   const nowOccurring = isPast(dateTime) && !isPast(dateTime + 7200 * 1000);
 
   const title = event.title

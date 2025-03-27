@@ -250,7 +250,9 @@ export default function EventPageContent({
       ? "formation"
       : past && event.best_move
         ? "best-move"
-        : "players",
+        : event.players.length > 0
+          ? "players"
+          : "description",
   );
   const [leftTabSwitch, setLeftTabSwitch] = useState(true);
 
@@ -277,23 +279,27 @@ export default function EventPageContent({
             return "gallery";
           else if (event.best_move) return "best-move";
           else if (event.map.length > 0) return "formation";
-          return "players";
+          return "description";
         }
         if (tab === "description") {
           if (event.images.length > 0 || event.videos.length > 0)
             return "gallery";
           else if (event.best_move) return "best-move";
           else if (event.map.length > 0) return "formation";
-          return "players";
+          else if (event.players.length > 0) return "players";
+          return "description";
         } else if (tab === "gallery") {
           if (event.best_move) return "best-move";
           else if (event.map.length > 0) return "formation";
-          return "players";
+          else if (event.players.length > 0) return "players";
+          return "description";
         } else if (tab === "best-move") {
           if (event.map.length > 0) return "formation";
-          return "players";
+          else if (event.players.length > 0) return "players";
+          return "description";
         } else if (tab === "formation") {
-          return "players";
+          if (event.players.length > 0) return "players";
+          return "description";
         }
 
         return tab;
@@ -304,6 +310,7 @@ export default function EventPageContent({
       clearInterval(interval);
     };
   }, [
+    event.players,
     event.best_move,
     event.description,
     event.images.length,
@@ -616,127 +623,129 @@ export default function EventPageContent({
             setLeftTabSwitch(false);
           }}
         >
-          <Tab key="players" title="משתתפים">
-            <div className="flex min-h-0 flex-1 flex-col rounded-b-xl">
-              <div className="flex min-h-0 flex-1 flex-col gap-2">
-                <div className="flex gap-2">
-                  <div className="flex items-start gap-2 overflow-x-auto">
-                    {event.sub_type === "Singles" &&
-                      showGroups &&
-                      event.groups.map((group) => (
-                        <div
-                          className="flex shrink-0 items-center gap-2 rounded-xl border border-theme-light-gray bg-theme-foreground p-2"
-                          key={group.id}
-                        >
-                          <GroupIcon
-                            className="!h-10 !w-10"
-                            color={group.name}
-                          />
-                          <div className="text-right">
-                            {past && (
-                              <p className="whitespace-nowrap text-sm font-medium">
-                                {group.wins || 0} נצחונות
-                              </p>
-                            )}
-                            <p className="whitespace-nowrap text-xs text-theme-gray">
-                              {group.players?.length} שחקנים
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                  </div>
-                  <div className="mr-auto flex flex-wrap gap-2 text-sm">
-                    {inWaitingList && (
-                      <Chip
-                        className="inline-flex h-8 gap-2 border border-warning bg-warning/10 px-2 text-xs text-warning"
-                        classNames={{ content: "pl-0" }}
-                        endContent={<IconClock className="ml-2 h-4 w-4" />}
-                      >
-                        <p className="font-semibold">ברשימת המתנה</p>
-                      </Chip>
-                    )}
-                    <Chip
-                      className="inline-flex h-8 max-w-[unset] gap-2 border border-theme-green bg-theme-green/10 px-2 text-xs text-theme-green"
-                      classNames={{ content: "pl-0" }}
-                      endContent={<IconUsersGroup className="ml-2 h-4 w-4" />}
-                    >
-                      <span className="font-semibold">
-                        {event.players.length || 0}
-                      </span>{" "}
-                      שחקנים{" "}
-                      {event.players &&
-                        event.players.length > 0 &&
-                        !past &&
-                        "כבר נרשמו"}
-                    </Chip>
-                  </div>
-                </div>
-                <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto scrollbar-hide">
-                  {event?.sub_type === "Singles" ? (
-                    [
-                      ...sortedPlayers.map((player, i) => {
-                        return (
-                          <Link href={`/player/${player.id}`} key={player.id}>
-                            <PlayerCard
-                              player={player}
-                              group={showGroups ? player.group : undefined}
-                              mvp={player.mvp}
-                              goalsKing={player.goalsKing}
-                              index={i}
+          {event.players.length && (
+            <Tab key="players" title="משתתפים">
+              <div className="flex min-h-0 flex-1 flex-col rounded-b-xl">
+                <div className="flex min-h-0 flex-1 flex-col gap-2">
+                  <div className="flex gap-2">
+                    <div className="flex items-start gap-2 overflow-x-auto">
+                      {event.sub_type === "Singles" &&
+                        showGroups &&
+                        event.groups.map((group) => (
+                          <div
+                            className="flex shrink-0 items-center gap-2 rounded-xl border border-theme-light-gray bg-theme-foreground p-2"
+                            key={group.id}
+                          >
+                            <GroupIcon
+                              className="!h-10 !w-10"
+                              color={group.name}
                             />
-                          </Link>
-                        );
-                      }),
-                      event.waiting_list && event.waiting_list.length > 0 && (
-                        <React.Fragment key="waiting-list">
-                          <div className="relative py-2" key="seperator">
-                            <div className="h-[1px] bg-warning" />
-                            <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-1 dark:bg-theme-card">
-                              רשימת המתנה
-                            </p>
+                            <div className="text-right">
+                              {past && (
+                                <p className="whitespace-nowrap text-sm font-medium">
+                                  {group.wins || 0} נצחונות
+                                </p>
+                              )}
+                              <p className="whitespace-nowrap text-xs text-theme-gray">
+                                {group.players?.length} שחקנים
+                              </p>
+                            </div>
                           </div>
-                          {...(event.waiting_list || []).map((player, i) => {
-                            return (
-                              <Link
-                                href={`/player/${player.id}`}
-                                key={player.id}
-                              >
-                                <PlayerCard
-                                  player={player}
-                                  index={sortedPlayers.length + i}
-                                />
-                              </Link>
-                            );
-                          })}
-                        </React.Fragment>
-                      ),
-                    ]
-                  ) : (
-                    <>
-                      <div
-                        className="flex gap-2 overflow-x-auto"
-                        style={{
-                          flexDirection: event.levels ? "row" : "column",
-                        }}
-                      >
-                        {event.teams.map((team) => (
-                          <Link href={`/team/${team.id}`} key={team.id}>
-                            <TeamCard team={team} isAdmin={team.is_admin} />
-                          </Link>
                         ))}
-                      </div>
-                      <TournamentView
-                        className="overflow-x-auto"
-                        levels={event.levels}
-                        games={event.games}
-                        teams={event.teams}
-                      />
-                    </>
-                  )}
+                    </div>
+                    <div className="mr-auto flex flex-wrap gap-2 text-sm">
+                      {inWaitingList && (
+                        <Chip
+                          className="inline-flex h-8 gap-2 border border-warning bg-warning/10 px-2 text-xs text-warning"
+                          classNames={{ content: "pl-0" }}
+                          endContent={<IconClock className="ml-2 h-4 w-4" />}
+                        >
+                          <p className="font-semibold">ברשימת המתנה</p>
+                        </Chip>
+                      )}
+                      <Chip
+                        className="inline-flex h-8 max-w-[unset] gap-2 border border-theme-green bg-theme-green/10 px-2 text-xs text-theme-green"
+                        classNames={{ content: "pl-0" }}
+                        endContent={<IconUsersGroup className="ml-2 h-4 w-4" />}
+                      >
+                        <span className="font-semibold">
+                          {event.players.length || 0}
+                        </span>{" "}
+                        שחקנים{" "}
+                        {event.players &&
+                          event.players.length > 0 &&
+                          !past &&
+                          "כבר נרשמו"}
+                      </Chip>
+                    </div>
+                  </div>
+                  <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto scrollbar-hide">
+                    {event?.sub_type === "Singles" ? (
+                      [
+                        ...sortedPlayers.map((player, i) => {
+                          return (
+                            <Link href={`/player/${player.id}`} key={player.id}>
+                              <PlayerCard
+                                player={player}
+                                group={showGroups ? player.group : undefined}
+                                mvp={player.mvp}
+                                goalsKing={player.goalsKing}
+                                index={i}
+                              />
+                            </Link>
+                          );
+                        }),
+                        event.waiting_list && event.waiting_list.length > 0 && (
+                          <React.Fragment key="waiting-list">
+                            <div className="relative py-2" key="seperator">
+                              <div className="h-[1px] bg-warning" />
+                              <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-1 dark:bg-theme-card">
+                                רשימת המתנה
+                              </p>
+                            </div>
+                            {...(event.waiting_list || []).map((player, i) => {
+                              return (
+                                <Link
+                                  href={`/player/${player.id}`}
+                                  key={player.id}
+                                >
+                                  <PlayerCard
+                                    player={player}
+                                    index={sortedPlayers.length + i}
+                                  />
+                                </Link>
+                              );
+                            })}
+                          </React.Fragment>
+                        ),
+                      ]
+                    ) : (
+                      <>
+                        <div
+                          className="flex gap-2 overflow-x-auto"
+                          style={{
+                            flexDirection: event.levels ? "row" : "column",
+                          }}
+                        >
+                          {event.teams.map((team) => (
+                            <Link href={`/team/${team.id}`} key={team.id}>
+                              <TeamCard team={team} isAdmin={team.is_admin} />
+                            </Link>
+                          ))}
+                        </div>
+                        <TournamentView
+                          className="overflow-x-auto"
+                          levels={event.levels}
+                          games={event.games}
+                          teams={event.teams}
+                        />
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </Tab>
+            </Tab>
+          )}
           <Tab key="description" title="קונספט המשחק">
             <p className="whitespace-pre-wrap">{event.description}</p>
           </Tab>

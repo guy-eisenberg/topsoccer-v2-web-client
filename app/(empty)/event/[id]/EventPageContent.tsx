@@ -254,7 +254,7 @@ export default function EventPageContent({
           ? "players"
           : "description",
   );
-  const [leftTabSwitch, setLeftTabSwitch] = useState(true);
+  const [leftTabSwitch, setLeftTabSwitch] = useState(past);
 
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
 

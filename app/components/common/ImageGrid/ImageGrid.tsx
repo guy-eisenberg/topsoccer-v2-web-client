@@ -28,7 +28,7 @@ const ImageGrid: React.FC<ImageGridProps> = ({
         rest.className,
       )}
     >
-      <div className="grid min-h-full auto-rows-[minmax(min-content,max-content)] grid-cols-2 gap-2">
+      <div className="grid min-h-full auto-rows-[minmax(min-content,max-content)] gap-2 md:grid-cols-2">
         {videos &&
           videos.map((video, i) =>
             video.url.endsWith("m3u8") ? (
@@ -39,7 +39,7 @@ const ImageGrid: React.FC<ImageGridProps> = ({
               />
             ) : (
               <button
-                className="flex h-48 flex-col items-center justify-center gap-4 rounded-xl border border-theme-light-gray bg-theme-card px-2 hover:border-theme-green"
+                className="flex h-64 flex-col items-center justify-center gap-4 rounded-xl border border-theme-light-gray bg-theme-foreground px-2 hover:border-theme-green md:h-48"
                 key={video.url}
                 onClick={() => {
                   open(video.url, "_blank");
@@ -56,7 +56,7 @@ const ImageGrid: React.FC<ImageGridProps> = ({
           images.map((image, i) => (
             <ImageItem
               alt="image"
-              className="h-48"
+              className="h-64 md:h-48"
               image={image}
               key={image}
               itemDeleted={() => itemDeleted && itemDeleted(i)}
@@ -74,7 +74,7 @@ function HLSItem({ url, title }: { url: string; title?: string }) {
   const [paused, setPaused] = useState(true);
 
   return (
-    <div className="relative overflow-hidden rounded-xl" key={url}>
+    <div className="relative h-64 overflow-hidden rounded-xl md:h-48" key={url}>
       <HLSPlayer
         onVideoPlay={() => {
           setPaused(false);

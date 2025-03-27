@@ -69,12 +69,12 @@ export default function UpsaleModal({ banners }: { banners: string[] }) {
         {(onClose) => (
           <ModalBody>
             <div className="relative flex flex-col gap-4">
-              <a href="https://shirt4u.co.il/" target="_blank">
+              <a href="https://shirt4u.co.il" target="_blank">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   alt="Image Zoom"
                   src={banners[slideIndex]}
-                  className="mx-auto max-h-[65vh] w-auto overflow-hidden rounded-xl object-contain"
+                  className="mx-auto h-[75vh] w-auto overflow-hidden rounded-xl object-cover"
                 />
               </a>
 

@@ -174,13 +174,8 @@ export default function ManageEventMapTabContent({
             })}
           </div>
         </div>
-        <div className="h-full min-h-0 flex-1 overflow-y-auto">
-          <SoccerMap
-            className="overflow-hidden rounded-xl"
-            players={players}
-            updatePlayers={setMap}
-            enableEdit
-          />
+        <div className="h-full min-h-0 flex-1 overflow-y-auto scrollbar-hide">
+          <SoccerMap players={players} updatePlayers={setMap} enableEdit />
         </div>
       </div>
       <div className="flex justify-between gap-4">

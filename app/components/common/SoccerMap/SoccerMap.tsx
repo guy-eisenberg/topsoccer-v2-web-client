@@ -1,6 +1,7 @@
 import type { Topsoccer } from "@/types";
+import { cn } from "@heroui/react";
 import { Skeleton } from "@heroui/skeleton";
-import { cn } from "@heroui/theme";
+import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import PlayerNode from "./PlayerNode";
@@ -11,7 +12,7 @@ interface SoccerMapProps extends React.HTMLAttributes<HTMLDivElement> {
   enableEdit?: boolean;
 }
 
-const ASPECT_RATIO = 1401 / 980;
+const ASPECT_RATIO = 980 / 1401;
 
 const SoccerMap: React.FC<SoccerMapProps> = ({
   players,
@@ -51,14 +52,26 @@ const SoccerMap: React.FC<SoccerMapProps> = ({
   }, []);
 
   return (
-    <div
+    <AspectRatio
       {...rest}
       dir="ltr"
-      className={cn(rest.className, "relative")}
-      style={{ paddingTop: `calc(${ASPECT_RATIO} * 100%)` }}
+      className={"relative"}
+      ratio={ASPECT_RATIO}
     >
-      <Skeleton className="absolute inset-0" isLoaded={loaded}>
-        <div className="absolute bottom-0 left-0 right-0 top-0" ref={container}>
+      <Skeleton
+        className={cn(
+          "absolute inset-0 overflow-hidden rounded-xl",
+          rest.className,
+        )}
+        isLoaded={loaded}
+      >
+        <div
+          className={cn(
+            "absolute bottom-0 left-0 right-0 top-0 overflow-hidden rounded-xl",
+            rest.className,
+          )}
+          ref={container}
+        >
           <Image
             alt="soccer field"
             className="select-none"
@@ -88,7 +101,7 @@ const SoccerMap: React.FC<SoccerMapProps> = ({
           </div>
         </div>
       </Skeleton>
-    </div>
+    </AspectRatio>
   );
 
   function onPlayerMove(player: Topsoccer.Event.Map, x: number, y: number) {

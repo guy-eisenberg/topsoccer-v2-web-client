@@ -26,14 +26,15 @@ import { isPast } from "@/utils/isPast";
 import toast from "@/utils/toast";
 import { Chip } from "@heroui/chip";
 import { Tab } from "@heroui/tabs";
-import { cn } from "@heroui/theme";
 import {
   IconClock,
   IconEdit,
   IconExternalLink,
   IconLocation,
+  IconUsersGroup,
   IconVideo,
 } from "@tabler/icons-react";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
 import {
@@ -42,7 +43,6 @@ import {
   teamEnrollEvent as _teamEnrollEvent,
   teamUnrollEvent as _teamUnrollEvent,
 } from "./actions";
-import ExpandMapModal from "./modals/ExpandMapModal";
 
 type Player = Topsoccer.User.UserInterface &
   Topsoccer.Event.Stats & {
@@ -75,6 +75,7 @@ export default function EventPageContent({
   payment,
   user_teams,
   event,
+  banners,
 }: {
   user: Topsoccer.User.Auth | null;
   is_worker: boolean;
@@ -83,6 +84,7 @@ export default function EventPageContent({
     players: Topsoccer.User.UserInterface[];
   })[];
   event: EventData;
+  banners: string[];
 }) {
   const router = useRouter();
 
@@ -241,16 +243,16 @@ export default function EventPageContent({
   );
   const [topTabSwitch, setTopTabSwitch] = useState(true);
 
-  const [bottomTab, setBottomTab] = useState<
-    "description" | "best-move" | "formation" | "gallery"
+  const [leftTab, setLeftTab] = useState<
+    "players" | "description" | "best-move" | "formation" | "gallery"
   >(
     event.map.length > 0
       ? "formation"
       : past && event.best_move
         ? "best-move"
-        : "description",
+        : "players",
   );
-  const [bottomTabSwitch, setBottomTabSwitch] = useState(true);
+  const [leftTabSwitch, setLeftTabSwitch] = useState(true);
 
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
 
@@ -262,36 +264,36 @@ export default function EventPageContent({
   const [teamEnrollModalOpen, setTeamEnrollModalOpen] = useState(false);
   const [teamUnrollModalOpen, setTeamUnrollModalOpen] = useState(false);
 
-  const [expandMapModal, setExpandMapModal] = useState(false);
+  const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
 
   useEffect(() => {
-    if (!bottomTabSwitch) return;
+    if (!leftTabSwitch) return;
 
     const interval = setInterval(() => {
-      setBottomTab((tab) => {
+      setLeftTab((tab) => {
+        if (tab === "players") {
+          if (event.description) return "description";
+          else if (event.images.length > 0 || event.videos.length > 0)
+            return "gallery";
+          else if (event.best_move) return "best-move";
+          else if (event.map.length > 0) return "formation";
+          return "players";
+        }
         if (tab === "description") {
           if (event.images.length > 0 || event.videos.length > 0)
             return "gallery";
           else if (event.best_move) return "best-move";
           else if (event.map.length > 0) return "formation";
-          return "description";
+          return "players";
         } else if (tab === "gallery") {
           if (event.best_move) return "best-move";
           else if (event.map.length > 0) return "formation";
-          else if (event.description) return "description";
-          return "gallery";
+          return "players";
         } else if (tab === "best-move") {
           if (event.map.length > 0) return "formation";
-          else if (event.description) return "description";
-          else if (event.images.length > 0 || event.videos.length > 0)
-            return "gallery";
-          return "best-move";
+          return "players";
         } else if (tab === "formation") {
-          if (event.description) return "description";
-          else if (event.images.length > 0 || event.videos.length > 0)
-            return "gallery";
-          else if (event.best_move) return "best-move";
-          return "formation";
+          return "players";
         }
 
         return tab;
@@ -307,7 +309,7 @@ export default function EventPageContent({
     event.images.length,
     event.map.length,
     event.videos.length,
-    bottomTabSwitch,
+    leftTabSwitch,
   ]);
 
   useEffect(() => {
@@ -351,17 +353,29 @@ export default function EventPageContent({
     };
   }, [event.stadium, winningTeams, bestPlayers, topTabSwitch]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBannerIndex((index) => {
+        if (index >= banners.length - 1) return 0;
+
+        return index + 1;
+      });
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [banners]);
+
   const showGroups = past || event?.reveal_groups;
 
   return (
     <>
-      <main className="m-auto flex min-h-0 w-full flex-col gap-8 text-center md:h-full md:flex-row">
-        <div className="flex min-h-0 flex-1 flex-col gap-8 text-right md:max-w-[50%]">
-          <div>
+      <main className="m-auto flex min-h-0 w-full flex-col gap-4 text-center md:h-full md:flex-row">
+        <div className="flex min-h-0 flex-1 flex-col gap-2 text-right md:max-w-[50%]">
+          <div className="flex flex-col gap-2">
             <div className="flex gap-2">
-              <p className="mb-4 flex-1 text-2xl font-semibold">
-                {event.title}
-              </p>
+              <p className="flex-1 text-xl font-semibold">{event.title}</p>
               {(user?.role === "admin" || is_worker) && (
                 <Link href={`/event/edit/${event.id}`}>
                   <Button variant="bordered" color="default" size="sm">
@@ -370,16 +384,16 @@ export default function EventPageContent({
                 </Link>
               )}
             </div>
-            <div className="flex flex-col gap-4 text-sm">
-              <div className="flex flex-wrap justify-between gap-2 text-theme-gray md:flex-row">
+            <div className="flex flex-col gap-2 text-sm">
+              <div className="flex flex-wrap justify-between gap-2 text-theme-green md:flex-row">
                 <div className="flex flex-wrap gap-3">
-                  <div className="flex items-center gap-1">
-                    <IconClock width={18} height={18} />
-                    <p className="text-lg">{`${day}.${month} · ${hour}:${minute}`}</p>
+                  <div className="flex items-center gap-1 rounded-xl border border-theme-green bg-theme-green/10 px-2">
+                    <IconClock className="h-4 w-4" />
+                    <p>{`${hour}:${minute} · ${day}.${month}`}</p>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <IconLocation width={18} height={18} />
-                    <p className="text-lg">{event.address}</p>
+                  <div className="flex items-center gap-1 rounded-xl border border-theme-green bg-theme-green/10 px-2">
+                    <IconLocation className="h-4 w-4" />
+                    <p>{event.address}</p>
                   </div>
                 </div>
                 <Chip
@@ -469,15 +483,17 @@ export default function EventPageContent({
             </div>
 
             {enrolled && !canUnrollByTime && (
-              <p className="mt-4 inline-block rounded-xl border border-danger bg-danger-50 px-2 py-1 text-sm font-semibold text-danger">
+              <p className="inline-block rounded-xl border border-danger bg-danger-50 px-2 py-1 text-center text-sm font-semibold text-danger">
                 🚨 ביטול אפשרי עד 10:00 בבוקר ביום המשחק 🚨
               </p>
             )}
 
-            <p className="mt-4 rounded-xl border border-warning bg-warning-50 px-2 py-1 text-center text-sm font-semibold text-warning">
-              מזכירים כי אין ביטוח לפציעות שחקנים!
-            </p>
-            <div className="mt-4 flex justify-between">
+            {!past && (
+              <p className="rounded-xl border border-warning bg-warning-50 px-2 py-1 text-center text-sm font-semibold text-warning">
+                מזכירים כי אין ביטוח לפציעות שחקנים!
+              </p>
+            )}
+            <div className="flex justify-between">
               <div className="flex flex-wrap items-center gap-2">
                 <Button
                   className="w-20 border border-theme-green bg-white text-theme-green"
@@ -575,175 +591,177 @@ export default function EventPageContent({
               )}
             </div>
           </div>
-          <div className="flex min-h-0 flex-col md:rounded-xl">
-            <Tabs
-              selectedKey={bottomTab}
-              onSelectionChange={(key) => {
-                setBottomTab(key as any);
-                setBottomTabSwitch(false);
-              }}
-            >
-              <Tab key="description" title="קונספט המשחק">
-                <div className="py-3">
-                  <p className="whitespace-pre-wrap">{event.description}</p>
-                </div>
-              </Tab>
-              {(event.images.length > 0 || event.videos.length > 0) && (
-                <Tab key="gallery" title="גלריה">
-                  <div className="py-3">
-                    <ImageGrid
-                      className="w-full"
-                      images={event.images}
-                      videos={event.videos}
-                    />
-                  </div>
-                </Tab>
-              )}
-              {event.best_move && (
-                <Tab key="best-move" title="המהלך היפה">
-                  <div className="py-3">
-                    <iframe
-                      className="h-full min-h-[320px] w-full"
-                      src={event?.best_move}
-                    ></iframe>
-                  </div>
-                </Tab>
-              )}
-              {event.map.length > 0 && (
-                <Tab key="formation" title="נבחרת המחזור">
-                  <div className="py-3">
-                    <SoccerMap
-                      className="w-full flex-1 overflow-hidden rounded-xl border border-transparent md:hidden"
-                      players={event.map}
-                    />
-                    <SoccerMap
-                      className="hidden h-[700px] flex-1 cursor-pointer overflow-hidden rounded-xl border border-transparent hover:border-theme-green md:block"
-                      players={event.map}
-                      onClick={() => setExpandMapModal(true)}
-                    />
-                  </div>
-                </Tab>
-              )}
-            </Tabs>
-          </div>
-        </div>
-        <div
-          className={cn(
-            "flex min-h-0 flex-1 flex-col gap-8 md:max-w-[50%]",
-            !event.images && "flex-col",
+          {banners.length > 0 && (
+            <div className="relative hidden flex-1 md:block">
+              <a href="https://shirt4u.co.il" target="_blank">
+                <Image
+                  alt="Banner"
+                  className="rounded-xl object-cover"
+                  src={banners[currentBannerIndex]}
+                  fill
+                />
+              </a>
+            </div>
           )}
-        >
-          <div className="flex min-h-0 flex-1 flex-col rounded-xl border border-theme-light-gray bg-white px-6 py-4 dark:bg-[#27272A]">
-            <div className="mb-3 flex items-center justify-between">
-              <p className="text-lg font-semibold">
-                {event?.sub_type === "Singles" ? "משתתפים" : "קבוצות"}
-              </p>
-              <div className="flex gap-2 text-sm">
-                {inWaitingList && (
-                  <Chip
-                    className="inline-flex h-8 gap-2 border border-warning bg-warning/10 px-2"
-                    classNames={{ content: "pl-0" }}
-                    endContent={<IconClock className="ml-2 h-4 w-4" />}
-                  >
-                    <p>את/ה ברשימת המתנה</p>
-                  </Chip>
-                )}
-                <Chip className="inline-flex h-8 gap-2 border border-theme-green bg-theme-green/10 px-2 text-theme-green">
-                  <span className="font-semibold">
-                    {event.players.length || 0}
-                  </span>{" "}
-                  שחקנים{" "}
-                  {event.players &&
-                    event.players.length > 0 &&
-                    !past &&
-                    "כבר נרשמו"}
-                </Chip>
-              </div>
-            </div>
-            <div className="flex min-h-0 flex-1 flex-col gap-2">
-              <div className="flex gap-4 overflow-x-auto">
-                {event?.sub_type === "Singles" &&
-                  showGroups &&
-                  event.groups.map((group) => (
-                    <div
-                      className="flex shrink-0 items-center gap-2 rounded-xl border border-theme-light-gray bg-theme-foreground p-2"
-                      key={group.id}
-                    >
-                      <GroupIcon className="!h-10 !w-10" color={group.name} />
-                      <div className="text-right">
-                        {past && (
-                          <p className="whitespace-nowrap text-sm">
-                            {group.wins || 0} נצחונות
-                          </p>
-                        )}
-                        <p className="whitespace-nowrap text-xs text-theme-gray">
-                          {group.players?.length} שחקנים
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-              <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto scrollbar-hide">
-                {event?.sub_type === "Singles" ? (
-                  [
-                    ...sortedPlayers.map((player, i) => {
-                      return (
-                        <Link href={`/player/${player.id}`} key={player.id}>
-                          <PlayerCard
-                            player={player}
-                            group={showGroups ? player.group : undefined}
-                            mvp={player.mvp}
-                            goalsKing={player.goalsKing}
-                            index={i}
-                          />
-                        </Link>
-                      );
-                    }),
-                    event.waiting_list && event.waiting_list.length > 0 && (
-                      <React.Fragment key="waiting-list">
-                        <div className="relative py-2" key="seperator">
-                          <div className="h-[1px] bg-warning" />
-                          <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-1 dark:bg-theme-card">
-                            רשימת המתנה
-                          </p>
-                        </div>
-                        {...(event.waiting_list || []).map((player, i) => {
-                          return (
-                            <Link href={`/player/${player.id}`} key={player.id}>
-                              <PlayerCard
-                                player={player}
-                                index={sortedPlayers.length + i}
-                              />
-                            </Link>
-                          );
-                        })}
-                      </React.Fragment>
-                    ),
-                  ]
-                ) : (
-                  <>
-                    <div
-                      className="flex gap-2 overflow-x-auto"
-                      style={{ flexDirection: event.levels ? "row" : "column" }}
-                    >
-                      {event.teams.map((team) => (
-                        <Link href={`/team/${team.id}`} key={team.id}>
-                          <TeamCard team={team} isAdmin={team.is_admin} />
-                        </Link>
-                      ))}
-                    </div>
-                    <TournamentView
-                      className="overflow-x-auto"
-                      levels={event.levels}
-                      games={event.games}
-                      teams={event.teams}
-                    />
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
         </div>
+        <Tabs
+          classNames={{
+            panel:
+              "border border-t-0 border-theme-light-gray bg-theme-card p-3 flex-1 rounded-b-xl",
+          }}
+          selectedKey={leftTab}
+          onSelectionChange={(key) => {
+            setLeftTab(key as any);
+            setLeftTabSwitch(false);
+          }}
+        >
+          <Tab key="players" title="משתתפים">
+            <div className="flex min-h-0 flex-1 flex-col rounded-b-xl">
+              <div className="flex min-h-0 flex-1 flex-col gap-2">
+                <div className="flex gap-2">
+                  <div className="flex flex-1 gap-2 overflow-x-auto">
+                    {event?.sub_type === "Singles" &&
+                      showGroups &&
+                      event.groups.map((group) => (
+                        <div
+                          className="flex shrink-0 items-center gap-2 rounded-xl border border-theme-light-gray bg-theme-foreground p-2"
+                          key={group.id}
+                        >
+                          <GroupIcon
+                            className="!h-10 !w-10"
+                            color={group.name}
+                          />
+                          <div className="text-right">
+                            {past && (
+                              <p className="whitespace-nowrap text-sm font-medium">
+                                {group.wins || 0} נצחונות
+                              </p>
+                            )}
+                            <p className="whitespace-nowrap text-xs text-theme-gray">
+                              {group.players?.length} שחקנים
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                  <div className="flex flex-col items-end gap-2 text-sm">
+                    {true && (
+                      <Chip
+                        className="inline-flex h-8 gap-2 border border-warning bg-warning/10 px-2 text-xs text-warning"
+                        classNames={{ content: "pl-0" }}
+                        endContent={<IconClock className="ml-2 h-4 w-4" />}
+                      >
+                        <p className="font-semibold">ברשימת המתנה</p>
+                      </Chip>
+                    )}
+                    <Chip
+                      className="inline-flex h-8 max-w-[unset] gap-2 border border-theme-green bg-theme-green/10 px-2 text-xs text-theme-green"
+                      classNames={{ content: "pl-0" }}
+                      endContent={<IconUsersGroup className="ml-2 h-4 w-4" />}
+                    >
+                      <span className="font-semibold">
+                        {event.players.length || 0}
+                      </span>{" "}
+                      שחקנים{" "}
+                      {event.players &&
+                        event.players.length > 0 &&
+                        !past &&
+                        "כבר נרשמו"}
+                    </Chip>
+                  </div>
+                </div>
+                <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto scrollbar-hide">
+                  {event?.sub_type === "Singles" ? (
+                    [
+                      ...sortedPlayers.map((player, i) => {
+                        return (
+                          <Link href={`/player/${player.id}`} key={player.id}>
+                            <PlayerCard
+                              player={player}
+                              group={showGroups ? player.group : undefined}
+                              mvp={player.mvp}
+                              goalsKing={player.goalsKing}
+                              index={i}
+                            />
+                          </Link>
+                        );
+                      }),
+                      event.waiting_list && event.waiting_list.length > 0 && (
+                        <React.Fragment key="waiting-list">
+                          <div className="relative py-2" key="seperator">
+                            <div className="h-[1px] bg-warning" />
+                            <p className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-1 dark:bg-theme-card">
+                              רשימת המתנה
+                            </p>
+                          </div>
+                          {...(event.waiting_list || []).map((player, i) => {
+                            return (
+                              <Link
+                                href={`/player/${player.id}`}
+                                key={player.id}
+                              >
+                                <PlayerCard
+                                  player={player}
+                                  index={sortedPlayers.length + i}
+                                />
+                              </Link>
+                            );
+                          })}
+                        </React.Fragment>
+                      ),
+                    ]
+                  ) : (
+                    <>
+                      <div
+                        className="flex gap-2 overflow-x-auto"
+                        style={{
+                          flexDirection: event.levels ? "row" : "column",
+                        }}
+                      >
+                        {event.teams.map((team) => (
+                          <Link href={`/team/${team.id}`} key={team.id}>
+                            <TeamCard team={team} isAdmin={team.is_admin} />
+                          </Link>
+                        ))}
+                      </div>
+                      <TournamentView
+                        className="overflow-x-auto"
+                        levels={event.levels}
+                        games={event.games}
+                        teams={event.teams}
+                      />
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Tab>
+          <Tab key="description" title="קונספט המשחק">
+            <p className="whitespace-pre-wrap">{event.description}</p>
+          </Tab>
+          {(event.images.length > 0 || event.videos.length > 0) && (
+            <Tab key="gallery" title="גלריה">
+              <ImageGrid
+                className="w-full"
+                images={event.images}
+                videos={event.videos}
+              />
+            </Tab>
+          )}
+          {event.best_move && (
+            <Tab key="best-move" title="המהלך היפה">
+              <iframe
+                className="h-full min-h-[320px] w-full"
+                src={event?.best_move}
+              ></iframe>
+            </Tab>
+          )}
+          {event.map.length > 0 && (
+            <Tab key="formation" title="נבחרת המחזור">
+              <SoccerMap players={event.map} />
+            </Tab>
+          )}
+        </Tabs>
 
         <ImageExpandModal
           src={expandedImage || ""}
@@ -799,12 +817,6 @@ export default function EventPageContent({
               )}
               isOpen={teamUnrollModalOpen}
               onOpenChange={setTeamUnrollModalOpen}
-            />
-
-            <ExpandMapModal
-              map={event.map}
-              isOpen={expandMapModal}
-              onOpenChange={setExpandMapModal}
             />
           </>
         )}

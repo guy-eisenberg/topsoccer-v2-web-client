@@ -199,6 +199,7 @@ export default function ManageEventDetailsTab({
             hourCycle={24}
             hideTimeZone
             showMonthAndYearPickers
+            suppressHydrationWarning
           />
         </div>
         <Input

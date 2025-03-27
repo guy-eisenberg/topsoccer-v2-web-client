@@ -85,7 +85,10 @@ const EventCard: React.FC<EventCardProps> = ({
         <div className="flex gap-4 text-theme-gray">
           <div className="flex items-center gap-1">
             <IconClock width={16} height={16} />
-            <p className="overflow-hidden text-ellipsis whitespace-nowrap text-xs">{`${time?.day}.${time?.month} · ${time?.hour}:${time?.minute}`}</p>
+            <p
+              className="overflow-hidden text-ellipsis whitespace-nowrap text-xs"
+              suppressHydrationWarning
+            >{`${time?.day}.${time?.month} · ${time?.hour}:${time?.minute}`}</p>
           </div>
           <div className="flex items-center gap-1">
             <IconMapPin width={16} height={16} />

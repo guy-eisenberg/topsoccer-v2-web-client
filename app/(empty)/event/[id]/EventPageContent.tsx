@@ -346,7 +346,9 @@ export default function EventPageContent({
                 <div className="flex flex-wrap gap-3">
                   <div className="flex items-center gap-1 rounded-xl border border-theme-green bg-theme-green/10 px-2">
                     <IconClock className="h-4 w-4" />
-                    <p>{`${hour}:${minute} · ${day}.${month}`}</p>
+                    <p
+                      suppressHydrationWarning
+                    >{`${hour}:${minute} · ${day}.${month}`}</p>
                   </div>
                   <div className="flex items-center gap-1 rounded-xl border border-theme-green bg-theme-green/10 px-2">
                     <IconLocation className="h-4 w-4" />

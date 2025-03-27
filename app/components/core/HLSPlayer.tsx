@@ -43,7 +43,7 @@ export default function HLSPlayer({
     }
 
     return () => {
-      hls.destroy();
+      if (hls) hls.destroy();
     };
   }, [src]);
 

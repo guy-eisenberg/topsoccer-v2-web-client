@@ -37,6 +37,10 @@ export default async function PlayerPage({
     Math.floor((stats.points % 100) / 10) * 100000 +
     (stats.points % 10) * 10000;
 
+  const defaultTab = stats.last_stats.length > 0 ? "last_events" : "stats";
+
+  console.log(defaultTab);
+
   return (
     <main className="m-auto flex w-full max-w-lg flex-col">
       <div className="mb-8 flex flex-col items-center gap-4">
@@ -63,7 +67,7 @@ export default async function PlayerPage({
         </div>
         <div className="flex w-full flex-1 flex-col">
           <QueryTabs
-            fallback="stats"
+            fallback={defaultTab}
             field="tab"
             options={[
               { key: "stats", title: "סטטיסטיקות" },
@@ -72,7 +76,7 @@ export default async function PlayerPage({
                 : null,
             ]}
           />
-          {(!tab || tab === "stats") && (
+          {((!tab && defaultTab === "stats") || tab === "stats") && (
             <div className="flex w-full flex-1 flex-col gap-2">
               <div className="flex items-start justify-between gap-4">
                 <QuerySelect
@@ -168,7 +172,8 @@ export default async function PlayerPage({
               </div>
             </div>
           )}
-          {tab === "last_events" && (
+          {((!tab && defaultTab === "last_events") ||
+            tab === "last_events") && (
             <div className="flex flex-col gap-2">
               {stats.last_stats.map((event) => {
                 const dateTime = new Date(event.time).getTime();

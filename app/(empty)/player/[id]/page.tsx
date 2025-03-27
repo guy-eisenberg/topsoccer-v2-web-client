@@ -39,8 +39,6 @@ export default async function PlayerPage({
 
   const defaultTab = stats.last_stats.length > 0 ? "last_events" : "stats";
 
-  console.log(defaultTab);
-
   return (
     <main className="m-auto flex w-full max-w-lg flex-col">
       <div className="mb-8 flex flex-col items-center gap-4">

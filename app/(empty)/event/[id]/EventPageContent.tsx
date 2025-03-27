@@ -47,6 +47,8 @@ import {
 type Player = Topsoccer.User.UserInterface &
   Topsoccer.Event.Stats & {
     group?: Topsoccer.Group.Name;
+    is_goalking: boolean;
+    is_mvp: boolean;
   };
 
 type EventData = Topsoccer.Event.Object & {
@@ -127,55 +129,6 @@ export default function EventPageContent({
       payment.method === "Manual" ||
       payment.method === "Team");
 
-  const statsEmpty = useMemo(
-    () =>
-      event.players.reduce((sum, player) => sum + (player.goals || 0), 0) === 0,
-    [event.players],
-  );
-
-  type SortedPlayers = (Topsoccer.User.UserInterface &
-    Topsoccer.Event.Stats & {
-      group?: Topsoccer.Group.Name;
-      goals: number;
-      goalsKing?: boolean;
-      mvp?: boolean;
-    })[];
-  const sortedPlayers = useMemo<SortedPlayers>(() => {
-    if (!event.players) return [];
-    if (event.players.length === 0) return [];
-
-    const playersWithGroups = event.players.sort((player1, player2) =>
-      (player2.group || "").localeCompare(player1.group || ""),
-    );
-
-    const playersWithStats = playersWithGroups.map((player) => {
-      return {
-        ...player,
-        mvp: false,
-        goalsKing: false,
-      };
-    });
-
-    if (!statsEmpty) {
-      playersWithStats.sort((player1, player2) => {
-        return (player2.goals || 0) - (player1.goals || 0);
-      });
-
-      playersWithStats[0].goalsKing = true;
-
-      playersWithStats.sort((player1, player2) => {
-        const player1Score = player1.goals * 2;
-        const player2Score = player2.goals * 2;
-
-        return player2Score - player1Score;
-      });
-
-      playersWithStats[0].mvp = true;
-    }
-
-    return playersWithStats;
-  }, [event.players, statsEmpty]);
-
   const winningTeams = useMemo(() => {
     const arr: {
       title: string;
@@ -192,16 +145,13 @@ export default function EventPageContent({
       player: Topsoccer.User.UserInterface &
         Topsoccer.Event.Stats & {
           group?: Topsoccer.Group.Name;
-          goals: number;
-          goalsKing?: boolean;
-          mvp?: boolean;
         };
       title?: string;
       image?: string;
     }[] = [];
 
     if (event.best_player) {
-      const player = sortedPlayers.find(
+      const player = event.players.find(
         (p) => p.id === event.best_player!.user_id,
       )!;
 
@@ -213,7 +163,7 @@ export default function EventPageContent({
         });
     }
     if (event.best_player_2) {
-      const player = sortedPlayers.find(
+      const player = event.players.find(
         (p) => p.id === event.best_player_2!.user_id,
       )!;
 
@@ -226,7 +176,7 @@ export default function EventPageContent({
     }
 
     return arr;
-  }, [event.best_player, event.best_player_2, sortedPlayers]);
+  }, [event.players, event.best_player, event.best_player_2]);
 
   const [topTab, setTopTab] = useState<
     | "stadium"
@@ -684,16 +634,16 @@ export default function EventPageContent({
                     </div>
                   </div>
                   <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto scrollbar-hide">
-                    {event?.sub_type === "Singles" ? (
+                    {event.sub_type === "Singles" ? (
                       [
-                        ...sortedPlayers.map((player, i) => {
+                        ...event.players.map((player, i) => {
                           return (
                             <Link href={`/player/${player.id}`} key={player.id}>
                               <PlayerCard
                                 player={player}
                                 group={showGroups ? player.group : undefined}
-                                mvp={player.mvp}
-                                goalsKing={player.goalsKing}
+                                mvp={player.is_mvp}
+                                goalsKing={player.is_goalking}
                                 index={i}
                               />
                             </Link>
@@ -715,7 +665,7 @@ export default function EventPageContent({
                                 >
                                   <PlayerCard
                                     player={player}
-                                    index={sortedPlayers.length + i}
+                                    index={event.players.length + i}
                                   />
                                 </Link>
                               );

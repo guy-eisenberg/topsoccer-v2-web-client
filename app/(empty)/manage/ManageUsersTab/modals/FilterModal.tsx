@@ -22,6 +22,7 @@ import {
   parseDate,
   toCalendarDate,
 } from "@internationalized/date";
+import { I18nProvider } from "@react-aria/i18n";
 import { useEffect, useState } from "react";
 
 export default function FilterModal({
@@ -252,33 +253,37 @@ export default function FilterModal({
                         <SelectItem key="custom">זמן מותאם אישי</SelectItem>
                       </Select>
                     </div>
-                    <DateRangePicker
-                      granularity="day"
-                      classNames={{
-                        inputWrapper: "border border-theme-light-gray",
-                      }}
-                      value={dateRange}
-                      onChange={(range) => {
-                        if (!range) {
-                          setDateRange(null);
-                          return;
-                        }
+                    <I18nProvider locale="he-IL">
+                      <DateRangePicker
+                        granularity="day"
+                        classNames={{
+                          inputWrapper: "border border-theme-light-gray",
+                        }}
+                        value={dateRange}
+                        onChange={(range) => {
+                          if (!range) {
+                            setDateRange(null);
+                            return;
+                          }
 
-                        setDateRange({
-                          start: parseDate(
-                            (range.start as any as CalendarDate).toString(),
-                          ),
-                          end: parseDate(
-                            (range.end as any as CalendarDate).toString(),
-                          ),
-                        });
-                      }}
-                      maxValue={toCalendarDate(fromDate(new Date(), TIMEZONE))}
-                      isDisabled={
-                        stadiumTimeFilterType !== "custom" ||
-                        !stadiumTypeFilterSelected
-                      }
-                    />
+                          setDateRange({
+                            start: parseDate(
+                              (range.start as any as CalendarDate).toString(),
+                            ),
+                            end: parseDate(
+                              (range.end as any as CalendarDate).toString(),
+                            ),
+                          });
+                        }}
+                        maxValue={toCalendarDate(
+                          fromDate(new Date(), TIMEZONE),
+                        )}
+                        isDisabled={
+                          stadiumTimeFilterType !== "custom" ||
+                          !stadiumTypeFilterSelected
+                        }
+                      />
+                    </I18nProvider>
                   </div>
                 </Tab>
               </Tabs>

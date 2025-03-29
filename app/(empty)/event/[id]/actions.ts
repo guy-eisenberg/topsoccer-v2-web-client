@@ -1,5 +1,6 @@
 "use server";
 
+import { createClient } from "@/clients/supabase/server";
 import { createServiceClient } from "@/clients/supabase/service";
 import type { Topsoccer } from "@/types";
 import { fetchAuth } from "@/utils/server/fetchAuth";
@@ -142,15 +143,15 @@ export async function teamEnrollEvent({
   if (!user) throw new Error("Unauthorized");
   if (user.blocked) throw new Error("User is blocked.");
 
-  const supabase = createServiceClient();
-
-  const { data: isTeamAdmin } = await supabase
+  const authClient = await createClient();
+  const { data: isTeamAdmin } = await authClient
     .rpc("z2_is_team_admin", {
       _team_id: team_id,
-      _user_id: user.id,
     })
     .single<boolean>();
   if (!isTeamAdmin) throw new Error("Unauthorized");
+
+  const supabase = createServiceClient();
 
   const { error } = await supabase.rpc("z2_team_enroll_event", {
     _event_id: event_id,
@@ -175,14 +176,16 @@ export async function teamUnrollEvent({
   const user = await fetchAuth();
   if (!user) throw new Error("Unauthorized");
 
-  const supabase = createServiceClient();
-
-  const { data: isTeamAdmin } = await supabase
+  const authClient = await createClient();
+  const { data: isTeamAdmin } = await authClient
     .rpc("z2_is_team_admin", {
       _team_id: team_id,
-      _user_id: user.id,
     })
     .single<boolean>();
+  if (!isTeamAdmin) throw new Error("Unauthorized");
+
+  const supabase = createServiceClient();
+
   if (!isTeamAdmin) throw new Error("Unauthorized");
 
   await supabase.rpc("z2_team_unroll_event", {

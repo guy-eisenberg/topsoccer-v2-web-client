@@ -91,8 +91,8 @@ export async function enrollEvent({
       ),
       payment_method === "Wallet"
         ? supabase.rpc("z2_update_user_wallet", {
-            user_id: user.id,
-            amount: -1,
+            _user_id: user.id,
+            _amount: -1,
           })
         : null,
     ]);

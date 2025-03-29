@@ -305,8 +305,8 @@ export async function refundPlayer({
         .eq("event_id", event_id)
         .eq("user_id", player_id),
       supabase.rpc("z2_update_user_wallet", {
-        user_id: user.id,
-        amount: 1,
+        _user_id: user.id,
+        _amount: 1,
       }),
     ]);
   }

@@ -82,9 +82,9 @@ export async function deleteGames({
   const supabase = await createClient();
 
   const { error } = await supabase.rpc("z2_event_level_delete_games", {
-    event_id: event_id,
-    level_id: level_id,
-    games,
+    _event_id: event_id,
+    _level_id: level_id,
+    _games: games,
   });
 
   if (error) throw error;
@@ -100,8 +100,8 @@ export async function manualEnrollTeam({
   const supabase = await createClient();
 
   const { error } = await supabase.rpc("z2_team_enroll_event", {
-    event_id: event_id,
-    team_id: team_id,
+    _event_id: event_id,
+    _team_id: team_id,
   });
 
   if (error) throw error;

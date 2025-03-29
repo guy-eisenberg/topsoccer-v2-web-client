@@ -109,9 +109,9 @@ export async function POST(request: Request) {
           .single();
 
         await supabase.rpc("z2_update_user_wallet", {
-          user_id: payment.user_id,
-          amount: payment.amount,
-          mode: "add",
+          _user_id: payment.user_id,
+          _amount: payment.amount,
+          _mode: "add",
         });
       }
 

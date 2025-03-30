@@ -10,6 +10,7 @@ import WinningTeamCompCard from "../WinningTeamCompCard";
 
 interface Highlight {
   event_id: string;
+  time: string;
   stadium_name: string;
   title: string;
   image: string;
@@ -26,10 +27,10 @@ export default function HighlightsCard({
     best_player_2: Highlight[];
   };
 }) {
-  const [topRightIndex, setTopRightIndex] = useState(0);
+  const [index, setIndex] = useState(0);
   const [switchSlides, setSwitchSlides] = useState(true);
 
-  const topRightElements = useMemo<(Highlight & { type: string })[]>(() => {
+  const elements = useMemo<(Highlight & { type: string })[]>(() => {
     return [
       ...highlights.winning_team.map((t) => ({ ...t, type: "team" })),
       ...highlights.winning_team_2.map((t) => ({ ...t, type: "team" })),
@@ -39,7 +40,9 @@ export default function HighlightsCard({
       ...highlights.best_player_2
         .filter((p) => p.image != null)
         .map((t) => ({ ...t, type: "player" })),
-    ];
+    ].sort(
+      (e1, e2) => new Date(e2.time).getTime() - new Date(e1.time).getTime(),
+    );
   }, [
     highlights.best_player,
     highlights.best_player_2,
@@ -51,8 +54,8 @@ export default function HighlightsCard({
     if (!switchSlides) return;
 
     const interval = setInterval(() => {
-      setTopRightIndex((index) => {
-        if (index >= topRightElements.length - 1) return 0;
+      setIndex((index) => {
+        if (index >= elements.length - 1) return 0;
 
         return index + 1;
       });
@@ -61,19 +64,19 @@ export default function HighlightsCard({
     return () => {
       clearInterval(interval);
     };
-  }, [topRightElements.length, switchSlides]);
+  }, [elements.length, switchSlides]);
 
-  return topRightElements.length > 0 ? (
+  return elements.length > 0 ? (
     <div
       className={cn(
         "relative overflow-hidden text-xs md:rounded-xl",
         rest.className,
       )}
     >
-      {topRightElements.map((e, i) => {
+      {elements.map((e, i) => {
         return (
           <Link
-            className={cn("hidden h-full", topRightIndex === i && "!block")}
+            className={cn("hidden h-full", index === i && "!block")}
             href={`/event/${e.event_id}`}
             key={i}
           >
@@ -87,11 +90,7 @@ export default function HighlightsCard({
       })}
       <Button
         onPress={() => {
-          setTopRightIndex(
-            topRightIndex === 0
-              ? topRightElements.length - 1
-              : topRightIndex - 1,
-          );
+          setIndex(index === 0 ? elements.length - 1 : index - 1);
 
           setSwitchSlides(false);
         }}
@@ -103,11 +102,7 @@ export default function HighlightsCard({
       </Button>
       <Button
         onPress={() => {
-          setTopRightIndex(
-            topRightIndex === topRightElements.length - 1
-              ? 0
-              : topRightIndex + 1,
-          );
+          setIndex(index === elements.length - 1 ? 0 : index + 1);
 
           setSwitchSlides(false);
         }}

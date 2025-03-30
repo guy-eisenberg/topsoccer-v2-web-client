@@ -14,9 +14,7 @@ export default function UpsaleModal({ banners }: { banners: string[] }) {
 
   const [shown, setShown] = useState(false);
 
-  const [slideIndex, setSlideIndex] = useState(
-    Math.floor(Math.random() * banners.length),
-  );
+  const [slideIndex, setSlideIndex] = useState(0);
   const [switchSlides, setSwitchSlides] = useState(true);
 
   const [hideNextTime, setHideNextTime] = useState(false);

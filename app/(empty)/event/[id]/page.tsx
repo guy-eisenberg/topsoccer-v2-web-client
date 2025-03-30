@@ -14,13 +14,11 @@ export default async function EventPage({
 
   const user = await fetchAuth();
 
-  const { event, teams, payment, is_worker } = await fetchData({
+  const { event, teams, payment, is_worker, banners } = await fetchData({
     event_id: id,
     user_id: user ? user.id : null,
   });
   if (!event) redirect("/");
-
-  const banners = await fetchBanners();
 
   return (
     <>
@@ -51,6 +49,7 @@ async function fetchData({
     { data: teams },
     { data: payment },
     { data: is_worker },
+    banners,
   ] = await Promise.all([
     supabase
       .rpc("z2_get_event_data", {
@@ -67,7 +66,8 @@ async function fetchData({
     supabase
       .rpc("z2_is_event_worker", { _event_id: event_id })
       .single<boolean>(),
+    fetchBanners(),
   ]);
 
-  return { event, teams, payment, is_worker };
+  return { event, teams, payment, is_worker, banners };
 }

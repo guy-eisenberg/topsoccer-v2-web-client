@@ -30,7 +30,7 @@ export default async function ManagePage({
           { key: "users", title: "משתמשים" },
           { key: "events", title: "אירועים" },
           user.role === "admin" ? { key: "stadiums", title: "מגרשים" } : null,
-          user.role === "admin" ? { key: "tickets", title: "ניקובים" } : null,
+          user.role === "admin" ? { key: "tickets", title: "כרטיסיות" } : null,
           user.role === "admin"
             ? { key: "terms-of-use", title: "תנאי שימוש" }
             : null,

@@ -83,6 +83,8 @@ export default function ManageTicketsPaymentsTab() {
 
   const pageCount = Math.ceil(poolSize / PAGE_SIZE);
 
+  let index = 1;
+
   return (
     <Table
       aria-label="Manage Tickets Payments Table"
@@ -109,9 +111,8 @@ export default function ManageTicketsPaymentsTab() {
       isHeaderSticky
     >
       <TableHeader>
-        <TableColumn key="display_name" align="center">
-          רוכש
-        </TableColumn>
+        <TableColumn align="center">#</TableColumn>
+        <TableColumn key="display_name">רוכש</TableColumn>
         <TableColumn key="created_at" align="center">
           תאריך רכישה
         </TableColumn>
@@ -125,7 +126,7 @@ export default function ManageTicketsPaymentsTab() {
           מחיר
         </TableColumn>
         <TableColumn key="wallet" align="center">
-          ניקובים בחשבון
+          יתרת ניקובים
         </TableColumn>
         <TableColumn key="method" align="center">
           צורת תשלום
@@ -157,6 +158,7 @@ export default function ManageTicketsPaymentsTab() {
 
           return (
             <TableRow key={ticket.id}>
+              <TableCell>{page * PAGE_SIZE + index++}</TableCell>
               <TableCell textValue={ticket.display_name}>
                 <div className="inline-flex items-center gap-2">
                   <PlayerAvatar

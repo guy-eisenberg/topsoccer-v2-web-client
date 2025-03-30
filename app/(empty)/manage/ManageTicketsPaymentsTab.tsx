@@ -28,6 +28,7 @@ interface TicketPaymentResult {
   id: string;
   display_name: string;
   photo_url: string | null;
+  wallet: number;
   created_at: string;
   title: string;
   amount: number;
@@ -118,10 +119,13 @@ export default function ManageTicketsPaymentsTab() {
           שם כרטיסייה
         </TableColumn>
         <TableColumn key="amount" align="center">
-          ניקובים
+          כמות
         </TableColumn>
         <TableColumn key="price" align="center">
           מחיר
+        </TableColumn>
+        <TableColumn key="wallet" align="center">
+          ניקובים בחשבון
         </TableColumn>
         <TableColumn key="method" align="center">
           צורת תשלום
@@ -172,6 +176,7 @@ export default function ManageTicketsPaymentsTab() {
                 </div>
               </TableCell>
               <TableCell>{ticket.price}₪</TableCell>
+              <TableCell>{ticket.wallet}</TableCell>
               <TableCell>{paymentMethodIcon}</TableCell>
               <TableCell>
                 <a href={ticket.invoice_url} target="_blank">

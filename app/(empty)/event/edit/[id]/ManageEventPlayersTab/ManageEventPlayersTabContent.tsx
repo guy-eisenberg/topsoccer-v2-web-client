@@ -101,7 +101,7 @@ export default function ManageEventPlayersTabContent({
     return str;
   }, [players]);
 
-  const groupsWhatsappTemplate = useMemo(() => {
+  const { str: groupsWhatsappTemplate, groupsTemplates } = useMemo(() => {
     const dayOfWeek = [
       "ראשון",
       "שני",
@@ -143,7 +143,9 @@ export default function ManageEventPlayersTabContent({
       Black: "שחורים",
     };
 
-    groups.map((group, i) => {
+    const groupsTemplates = groups.map((group, i) => {
+      let groupStr = "";
+
       const name = groupsNames[group.name];
       const emoji = groupsEmojis[group.name];
 
@@ -151,23 +153,32 @@ export default function ManageEventPlayersTabContent({
         (player) => player.group === group.name,
       );
 
-      str += `קבוצה מספר ${i + 1}: ${name} ${emoji}
-`;
+      str += `קבוצה מספר ${i + 1}: ${name} ${emoji}\n`;
+      groupStr += `קבוצה מספר ${i + 1}: ${name} ${emoji}\n`;
 
-      players?.map((player, j) => {
+      players.map((player, j) => {
         str += `${emoji} ${player.display_name}`;
+        groupStr += `${emoji} ${player.display_name}`;
 
-        if (i < groups.length - 1 || j < players.length - 1)
-          str += `
-`;
+        if (i < groups.length - 1 || j < players.length - 1) {
+          str += "\n";
+          groupStr += "\n";
+        }
       });
 
-      if (i < groups.length - 1)
-        str += `
-`;
+      if (i < groups.length - 1) {
+        str += "\n";
+        groupStr += "\n";
+      }
+
+      return {
+        name,
+        emoji,
+        str: groupStr,
+      };
     });
 
-    return str;
+    return { str, groupsTemplates };
   }, [groups, event.time, sortedPlayers]);
 
   const putPlayersInGroup = useCallback(
@@ -540,8 +551,11 @@ export default function ManageEventPlayersTabContent({
 
       <GroupsWhatsappTemplateModal
         text={
-          groups.length > 0 ? groupsWhatsappTemplate : noGroupsWhatsappTemplate
+          groupsTemplates.length > 0
+            ? groupsWhatsappTemplate
+            : noGroupsWhatsappTemplate
         }
+        groupsTemplates={groupsTemplates}
         isOpen={groupsWhatsappTemplateModalOpen}
         onOpenChange={setGroupsWhatsappTemplateModalOpen}
       />

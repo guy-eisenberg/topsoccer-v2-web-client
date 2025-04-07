@@ -1,6 +1,7 @@
 "use client";
 
 import ExcelIcon from "@/app/components/common/icons/ExcelIcon";
+import GoogleIcon from "@/app/components/common/icons/GoogleIcon";
 import { showLoading } from "@/app/components/common/Loader/Loader";
 import PlayerAvatar from "@/app/components/common/PlayerAvatar";
 import { Button } from "@/app/components/core/Button";
@@ -26,7 +27,7 @@ import {
   TableHeader,
   TableRow,
 } from "@heroui/table";
-import { IconCheck, IconDots, IconFilter } from "@tabler/icons-react";
+import { IconCheck, IconDots, IconFilter, IconMail } from "@tabler/icons-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { utils, writeFile } from "xlsx";
 import type { Topsoccer } from "../../../../types";
@@ -278,6 +279,11 @@ const ManageUsersTab: React.FC<{
                 <TableCell>{page * PAGE_SIZE + index++}</TableCell>
                 <TableCell textValue={user.display_name}>
                   <div className="flex items-center gap-2">
+                    {user.provider === "google" ? (
+                      <GoogleIcon className="h-4 w-4 shrink-0" />
+                    ) : (
+                      <IconMail className="h-4 w-4 shrink-0" />
+                    )}
                     <PlayerAvatar
                       className="h-7 w-7 rounded-xl"
                       src={user.photo_url}

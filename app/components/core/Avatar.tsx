@@ -1,12 +1,12 @@
 "use client";
 
+import { useMounted } from "@/hooks/useMounted";
 import {
   Avatar as _Avatar,
   type AvatarProps as _AvatarProps,
 } from "@heroui/avatar";
 import { Skeleton } from "@heroui/skeleton";
 import { cn } from "@heroui/theme";
-import _Image, { type ImageProps } from "next/image";
 import { forwardRef, useEffect, useState } from "react";
 import { v4 } from "uuid";
 
@@ -21,6 +21,8 @@ export function Avatar({ disableCache = true, src, ...rest }: AvatarProps) {
 
   const [version, setVersion] = useState("");
 
+  const mounted = useMounted();
+
   useEffect(() => {
     if (src && !src.startsWith("blob:") && disableCache) {
       setVersion(v4());
@@ -30,6 +32,8 @@ export function Avatar({ disableCache = true, src, ...rest }: AvatarProps) {
       setVersion("");
     };
   }, [src, disableCache]);
+
+  if (!mounted) return null;
 
   return (
     <Skeleton
@@ -45,7 +49,6 @@ export function Avatar({ disableCache = true, src, ...rest }: AvatarProps) {
         imgProps={
           {
             "data-loaded": `${(!error && !loading).toString()}`,
-            fill: true,
             sizes: "10vw",
             onLoad: () => {
               setLoading(false);
@@ -67,11 +70,12 @@ export function Avatar({ disableCache = true, src, ...rest }: AvatarProps) {
 
 const Image = forwardRef<
   HTMLImageElement,
-  ImageProps & { disableAnimation?: boolean }
+  React.HTMLAttributes<HTMLImageElement> & { disableAnimation?: boolean }
 >(function Image(_props, ref) {
   const props = { ..._props };
 
   if (props.disableAnimation !== undefined) delete props.disableAnimation;
 
-  return <_Image {...props} ref={ref} />;
+  // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
+  return <img {...props} ref={ref} />;
 });

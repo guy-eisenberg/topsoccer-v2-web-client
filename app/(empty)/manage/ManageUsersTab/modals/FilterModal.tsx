@@ -259,7 +259,7 @@ export default function FilterModal({
                         classNames={{
                           inputWrapper: "border border-theme-light-gray",
                         }}
-                        value={dateRange}
+                        value={dateRange as any}
                         onChange={(range) => {
                           if (!range) {
                             setDateRange(null);

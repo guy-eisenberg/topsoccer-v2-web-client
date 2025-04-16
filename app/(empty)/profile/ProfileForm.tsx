@@ -159,7 +159,7 @@ export default function ProfileForm({
           <Skeleton className="rounded-xl" isLoaded={!loading}>
             <DatePicker
               className="w-full"
-              value={birthDate}
+              value={birthDate as any}
               onChange={setBirthDate as any}
             />
           </Skeleton>

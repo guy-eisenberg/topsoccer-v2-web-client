@@ -193,7 +193,7 @@ export default function ManageEventDetailsTab({
         </div>
         <div dir="ltr">
           <DatePicker
-            value={dateTime}
+            value={dateTime as any}
             onChange={setDateTime as any}
             calendarProps={{ style: { direction: "ltr" } }}
             hourCycle={24}

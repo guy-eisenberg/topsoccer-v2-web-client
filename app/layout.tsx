@@ -1,4 +1,3 @@
-import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import Loader from "./components/common/Loader/Loader";
@@ -33,7 +32,6 @@ export default function RootLayout({
           {children}
           <Loader />
         </Providers>
-        <Analytics />
       </body>
     </html>
   );

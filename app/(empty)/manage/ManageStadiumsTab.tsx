@@ -7,6 +7,7 @@ import Input from "@/app/components/core/Input";
 import { useRouter } from "@/context/RouterContext";
 import type { Topsoccer } from "@/types";
 import toast from "@/utils/toast";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { deleteStadium as _deleteStadium } from "./actions";
 
@@ -32,15 +33,11 @@ export default function ManageStadiumsTab({
           onChange={(e) => setTerm(e.target.value)}
           placeholder="חפש לפי שם מגרש"
         />
-        {
-          <Button
-            color="primary"
-            className="whitespace-nowrap"
-            href="/stadium/edit/new"
-          >
+        <Link href="/stadium/edit/new">
+          <Button color="primary" className="whitespace-nowrap">
             צור מגרש
           </Button>
-        }
+        </Link>
       </div>
       <div className="mt-2 grid min-h-0 gap-2 overflow-y-auto md:grid-cols-2">
         {filteredStadiums.map((stadium) => (

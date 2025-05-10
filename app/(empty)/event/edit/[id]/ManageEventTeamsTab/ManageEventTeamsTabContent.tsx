@@ -78,6 +78,10 @@ export default function ManageEventTeamsTabContent({
                   <>
                     <Button
                       color="danger"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                      }}
                       onPress={() => {
                         setSelectedTeam(team);
                         setRemoveTeamModalOpen(true);

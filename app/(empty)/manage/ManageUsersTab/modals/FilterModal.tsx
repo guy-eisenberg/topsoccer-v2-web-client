@@ -317,6 +317,9 @@ export default function FilterModal({
         case "today":
           filter += "last_seen::date = now()::date";
           break;
+        case "yesterday":
+          filter += "last_seen::date = current_date - interval '1 day'";
+          break;
         case "week":
           filter += `last_seen::date >= current_date - date_part('dow', current_date)::int`;
           break;
@@ -397,6 +400,7 @@ const INSURANCE_OPTIONS = [
 
 const LAST_SEEN_OPTIONS = [
   { key: "today", label: "היום" },
+  { key: "yesterday", label: "אתמול" },
   { key: "week", label: "השבוע" },
   { key: "month", label: "החודש" },
   { key: "year", label: "השנה" },

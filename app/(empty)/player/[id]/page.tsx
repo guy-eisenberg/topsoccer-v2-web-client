@@ -29,7 +29,10 @@ export default async function PlayerPage({
   const { id } = await params;
   const { tab, trunc } = await searchParams;
 
-  const stats = await fetchData(id, trunc || "all");
+  const { stats, player_profile_default_viewmode } = await fetchData(
+    id,
+    trunc || "all",
+  );
   if (!stats) redirect("/");
 
   const playerValue =
@@ -37,7 +40,8 @@ export default async function PlayerPage({
     Math.floor((stats.points % 100) / 10) * 100000 +
     (stats.points % 10) * 10000;
 
-  const defaultTab = stats.last_stats.length > 0 ? "last_events" : "stats";
+  const defaultTab =
+    stats.last_stats.length === 0 ? "stats" : player_profile_default_viewmode;
 
   return (
     <main className="m-auto flex w-full max-w-lg flex-col">
@@ -254,32 +258,43 @@ async function fetchData(user_id: string, trunc: string) {
     })
     .single();
 
-  return stats as {
-    id: string;
-    display_name: string;
-    photo_url: string | null;
-    points: number;
-    goals: number;
-    shows: number;
-    wins: number;
-    balls_outside: number;
-    self_goal: number;
-    penalty_saved: number;
-    clean_net: number;
-    in_map: number;
-    is_mvp: boolean;
-    last_stats: {
+  const { data: player_profile_default_viewmode } = await supabase
+    .from("data")
+    .select("value")
+    .eq("key", "player_profile_default_viewmode")
+    .maybeSingle();
+
+  return {
+    stats: stats as {
       id: string;
-      time: string;
-      city: string;
-      type: Topsoccer.Event.Type;
-      sub_type: Topsoccer.Event.SubType;
+      display_name: string;
+      photo_url: string | null;
+      points: number;
       goals: number;
-      is_goalkeeper: boolean;
+      shows: number;
+      wins: number;
+      balls_outside: number;
+      self_goal: number;
       penalty_saved: number;
       clean_net: number;
-      is_goalking: boolean;
+      in_map: number;
       is_mvp: boolean;
-    }[];
-  } | null;
+      last_stats: {
+        id: string;
+        time: string;
+        city: string;
+        type: Topsoccer.Event.Type;
+        sub_type: Topsoccer.Event.SubType;
+        goals: number;
+        is_goalkeeper: boolean;
+        penalty_saved: number;
+        clean_net: number;
+        is_goalking: boolean;
+        is_mvp: boolean;
+      }[];
+    } | null,
+    player_profile_default_viewmode: player_profile_default_viewmode
+      ? (player_profile_default_viewmode.value as "last_events" | "stats")
+      : "last_events",
+  };
 }

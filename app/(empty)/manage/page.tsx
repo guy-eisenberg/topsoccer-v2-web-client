@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import ManageEventsTab from "./ManageEventsTab/ManageEventsTab";
 import ManageInsuranceStatementTab from "./ManageInsuranceStatementTab/ManageInsuranceStatementTab";
+import ManageSettingsTab from "./ManageSettingsTab/ManageSettingsTab";
 import ManageStadiumsTab from "./ManageStadiumsTab";
 import ManageTermsOfUseTab from "./ManageTermsOfUseTab/ManageTermsOfUseTab";
 import ManageTicketsPaymentsTab from "./ManageTicketsPaymentsTab";
@@ -37,6 +38,7 @@ export default async function ManagePage({
           user.role === "admin"
             ? { key: "insurance-statement", title: "הצהרת ביטוח" }
             : null,
+          user.role === "admin" ? { key: "settings", title: "הגדרות" } : null,
         ]}
         field="tab"
         fallback="users"
@@ -65,6 +67,11 @@ export default async function ManagePage({
       {tab === "insurance-statement" && (
         <Suspense fallback={<Skeleton className="flex-1 rounded-xl" />}>
           <ManageInsuranceStatementTab />
+        </Suspense>
+      )}
+      {tab === "settings" && (
+        <Suspense fallback={<Skeleton className="flex-1 rounded-xl" />}>
+          <ManageSettingsTab />
         </Suspense>
       )}
     </main>

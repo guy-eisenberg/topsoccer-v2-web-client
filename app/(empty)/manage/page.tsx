@@ -15,9 +15,13 @@ import ManageUsersTab from "./ManageUsersTab/ManageUsersTab";
 export default async function ManagePage({
   searchParams,
 }: {
-  searchParams: Promise<{ tab: string }>;
+  searchParams: Promise<{
+    tab: string;
+    past_events_start?: string;
+    past_events_end?: string;
+  }>;
 }) {
-  const { tab } = await searchParams;
+  const { tab, past_events_start, past_events_end } = await searchParams;
 
   const user = await fetchAuth();
   if (!user || (user.role !== "admin" && user.role !== "worker")) redirect("/");
@@ -50,7 +54,11 @@ export default async function ManagePage({
       )}
       {tab === "events" && (
         <Suspense fallback={<Skeleton className="flex-1 rounded-xl" />}>
-          <ManageEventsTab user={user} />
+          <ManageEventsTab
+            user={user}
+            past_events_start={past_events_start}
+            past_events_end={past_events_end}
+          />
         </Suspense>
       )}
       {tab === "stadiums" && <ManageStadiumsTab stadiums={stadiums || []} />}

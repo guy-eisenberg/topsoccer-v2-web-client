@@ -1,4 +1,4 @@
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { useMemo } from "react";
 import type { Topsoccer } from "../../../../types";
 import LevelCard from "../LevelCard";

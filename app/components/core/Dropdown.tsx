@@ -1,5 +1,4 @@
-import { Dropdown as _Dropdown } from "@heroui/dropdown";
-import { extendVariants } from "@heroui/system";
+import { Dropdown as _Dropdown, extendVariants } from "@heroui/react";
 
 const Dropdown = extendVariants(_Dropdown, {
   defaultVariants: {

@@ -1,7 +1,7 @@
 import { Button } from "@/app/components/core/Button";
+import Skeleton from "@/app/components/core/Skeleton";
 import type { Topsoccer } from "@/types";
-import { Skeleton } from "@heroui/skeleton";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Suspense } from "react";

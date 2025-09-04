@@ -5,9 +5,11 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Radio,
+  RadioGroup,
   type ModalProps,
-} from "@heroui/modal";
-import { Radio, RadioGroup, type RadioProps } from "@heroui/radio";
+  type RadioProps,
+} from "@heroui/react";
 import { IconChartPieFilled, IconCircleFilled } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 

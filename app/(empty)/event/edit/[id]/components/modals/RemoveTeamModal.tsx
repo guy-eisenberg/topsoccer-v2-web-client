@@ -7,7 +7,7 @@ import {
   ModalFooter,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 
 interface RemoveTeamModalProps extends Omit<ModalProps, "children"> {
   team: Topsoccer.Team.FullTeam;

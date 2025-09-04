@@ -1,11 +1,11 @@
 import {
+  cn,
   Modal,
   ModalBody,
   ModalContent,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
-import { cn } from "@heroui/theme";
+} from "@heroui/react";
 import type { Topsoccer } from "../../../../types";
 import TeamCard from "../TeamCard";
 

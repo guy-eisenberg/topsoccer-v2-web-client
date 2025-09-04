@@ -6,7 +6,7 @@ import {
   ModalContent,
   ModalFooter,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 import { useState } from "react";
 
 interface GroupsWhatsappTemplateModalProps

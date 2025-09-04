@@ -16,17 +16,19 @@ import { getRoleLabel } from "@/utils/getRoleLabel";
 import { prefix } from "@/utils/prefix";
 import { splitDate } from "@/utils/splitDate";
 import toast from "@/utils/toast";
-import { DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/dropdown";
-import { Pagination } from "@heroui/pagination";
-import { Button as _Button } from "@heroui/react";
 import {
+  Button as _Button,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Pagination,
   Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
   TableRow,
-} from "@heroui/table";
+} from "@heroui/react";
 import { IconCheck, IconDots, IconFilter, IconMail } from "@tabler/icons-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { utils, writeFile } from "xlsx";

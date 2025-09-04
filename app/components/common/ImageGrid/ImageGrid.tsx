@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { IconVideo } from "@tabler/icons-react";
 import { useState } from "react";
 import HLSPlayer from "../../core/HLSPlayer";

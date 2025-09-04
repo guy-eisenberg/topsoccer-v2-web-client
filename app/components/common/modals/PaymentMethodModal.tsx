@@ -8,9 +8,9 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  RadioGroup,
   type ModalProps,
-} from "@heroui/modal";
-import { RadioGroup } from "@heroui/radio";
+} from "@heroui/react";
 import { useEffect, useMemo, useState } from "react";
 import PaymentMethodRadio from "../PaymentMethodRadio";
 

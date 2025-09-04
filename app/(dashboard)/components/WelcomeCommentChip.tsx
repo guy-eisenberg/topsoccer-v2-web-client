@@ -1,5 +1,5 @@
 import { Contentful } from "@/clients/contentful";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 
 export default async function WelcomeCommentChip(
   props: React.HTMLAttributes<HTMLDivElement>,

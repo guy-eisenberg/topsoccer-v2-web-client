@@ -1,5 +1,4 @@
-import { Tabs as _Tabs, type TabsProps } from "@heroui/tabs";
-import { cn } from "@heroui/theme";
+import { Tabs as _Tabs, cn, type TabsProps } from "@heroui/react";
 
 export default function Tabs({ className, classNames, ...rest }: TabsProps) {
   return (

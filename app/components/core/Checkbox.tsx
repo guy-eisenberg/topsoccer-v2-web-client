@@ -1,4 +1,4 @@
-import { Checkbox as _Checkbox, type CheckboxProps } from "@heroui/checkbox";
+import { Checkbox as _Checkbox, type CheckboxProps } from "@heroui/react";
 
 export default function Checkbox({ ...rest }: CheckboxProps) {
   return (

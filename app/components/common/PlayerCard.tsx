@@ -1,6 +1,5 @@
 import type { Topsoccer } from "@/types";
-import { cn } from "@heroui/theme";
-import { Tooltip } from "@heroui/tooltip";
+import { cn, Tooltip } from "@heroui/react";
 import { IconTrash } from "@tabler/icons-react";
 import GroupIcon from "./GroupIcon";
 import CleanNetIcon from "./icons/CleanNetIcon";

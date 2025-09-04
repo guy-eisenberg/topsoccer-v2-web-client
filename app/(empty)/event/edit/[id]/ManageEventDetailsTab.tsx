@@ -15,7 +15,7 @@ import { calculateEventTitle } from "@/utils/calculateEventTitle";
 import { EVENT_SUBTYPES, EVENT_TYPES, TIMEZONE } from "@/utils/constants";
 import { getEventSubTypeLabel } from "@/utils/getEventSubTypeLabel";
 import toast from "@/utils/toast";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { fromDate, now, ZonedDateTime } from "@internationalized/date";
 import { useMemo, useState } from "react";
 import { upsertEvent as _upsertEvent } from "./actions";

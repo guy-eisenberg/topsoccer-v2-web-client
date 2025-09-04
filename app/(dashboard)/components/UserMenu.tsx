@@ -1,7 +1,7 @@
 import { showLoading } from "@/app/components/common/Loader/Loader";
 import type { Topsoccer } from "@/types";
 import toast from "@/utils/toast";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signout as _signout } from "../actions";

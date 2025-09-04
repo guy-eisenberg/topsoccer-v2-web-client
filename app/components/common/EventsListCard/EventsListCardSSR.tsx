@@ -1,7 +1,7 @@
 import { createClient } from "@/clients/supabase/server";
 import type { Topsoccer } from "@/types";
-import { Skeleton } from "@heroui/skeleton";
 import { Suspense } from "react";
+import Skeleton from "../../core/Skeleton";
 import EventsListCard from "./EventsListCard";
 
 type EventsListCardSSRProps = React.HTMLAttributes<HTMLDivElement> & {

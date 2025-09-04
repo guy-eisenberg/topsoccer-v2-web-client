@@ -4,7 +4,7 @@ import Logo from "@/app/components/common/assets/Logo";
 import PlayerAvatar from "@/app/components/common/PlayerAvatar";
 import { Button } from "@/app/components/core/Button";
 import type { Topsoccer } from "@/types";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";

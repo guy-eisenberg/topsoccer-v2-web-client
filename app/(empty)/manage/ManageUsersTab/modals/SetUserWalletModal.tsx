@@ -7,7 +7,7 @@ import {
   ModalFooter,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 import { useEffect, useState } from "react";
 
 export default function UpdateUserWalletModal({

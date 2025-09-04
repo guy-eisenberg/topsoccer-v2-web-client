@@ -1,6 +1,6 @@
 import type { Topsoccer } from "@/types";
 import getGroupColor from "@/utils/getGroupColor";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 
 export default function GroupIcon({
   color,

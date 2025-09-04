@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { type Icon, IconChevronDown } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

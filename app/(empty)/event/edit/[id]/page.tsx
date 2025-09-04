@@ -1,8 +1,8 @@
 import QueryTabs from "@/app/components/core/QueryTabs";
+import Skeleton from "@/app/components/core/Skeleton";
 import { createClient } from "@/clients/supabase/server";
 import type { Topsoccer } from "@/types";
 import { fetchAuth } from "@/utils/server/fetchAuth";
-import { Skeleton } from "@heroui/skeleton";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { ManageEventBestPlayersTab } from "./ManageEventBestPlayersTab/ManageEventBestPlayersTab";

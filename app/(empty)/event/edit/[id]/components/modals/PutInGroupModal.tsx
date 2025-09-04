@@ -8,7 +8,7 @@ import {
   ModalContent,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 import { IconWashDryclean } from "@tabler/icons-react";
 
 interface PutInGroupModalProps extends Omit<ModalProps, "children"> {

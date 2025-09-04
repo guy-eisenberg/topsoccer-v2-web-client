@@ -5,17 +5,17 @@ import { SelectItem } from "@/app/components/core/SelectItem";
 import Tabs from "@/app/components/core/Tabs";
 import type { Topsoccer } from "@/types";
 import { TIMEZONE } from "@/utils/constants";
-import { CheckboxGroup } from "@heroui/checkbox";
-import { DateRangePicker } from "@heroui/date-picker";
 import {
+  CheckboxGroup,
+  DateRangePicker,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
-import { Tab } from "@heroui/tabs";
+  Tab,
+} from "@heroui/react";
 import {
   type CalendarDate,
   fromDate,

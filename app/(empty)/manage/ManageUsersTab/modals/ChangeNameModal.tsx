@@ -7,7 +7,7 @@ import {
   ModalFooter,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 import { IconUser } from "@tabler/icons-react";
 import { useState } from "react";
 

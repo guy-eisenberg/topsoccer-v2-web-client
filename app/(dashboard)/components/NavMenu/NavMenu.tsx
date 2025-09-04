@@ -2,7 +2,7 @@
 
 import { useMounted } from "@/hooks/useMounted";
 import type { Topsoccer } from "@/types";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import {
   IconGraph,
   IconHelp,

@@ -5,7 +5,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 import { useState } from "react";
 import Cropper, { type Area } from "react-easy-crop";
 import { Button } from "../../../core/Button";

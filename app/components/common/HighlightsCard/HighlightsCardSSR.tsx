@@ -1,6 +1,6 @@
 import { createClient } from "@/clients/supabase/server";
-import { Skeleton } from "@heroui/skeleton";
 import { Suspense } from "react";
+import Skeleton from "../../core/Skeleton";
 import HighlightsCard from "./HighlightsCard";
 
 export default function HighlightsCardSSR(

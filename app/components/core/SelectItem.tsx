@@ -1,7 +1,6 @@
 "use client";
 
-import { SelectItem as _SelectItem } from "@heroui/select";
-import { extendVariants } from "@heroui/system";
+import { SelectItem as _SelectItem, extendVariants } from "@heroui/react";
 
 export const SelectItem = extendVariants(_SelectItem, {
   defaultVariants: {

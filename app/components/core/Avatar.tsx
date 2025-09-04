@@ -3,10 +3,10 @@
 import { useMounted } from "@/hooks/useMounted";
 import {
   Avatar as _Avatar,
+  cn,
+  Skeleton,
   type AvatarProps as _AvatarProps,
-} from "@heroui/avatar";
-import { Skeleton } from "@heroui/skeleton";
-import { cn } from "@heroui/theme";
+} from "@heroui/react";
 import { forwardRef, useEffect, useState } from "react";
 import { v4 } from "uuid";
 

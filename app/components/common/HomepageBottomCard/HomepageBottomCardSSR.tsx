@@ -1,7 +1,7 @@
 import { Contentful } from "@/clients/contentful";
 import { createClient } from "@/clients/supabase/server";
-import { Skeleton } from "@heroui/skeleton";
 import { Suspense } from "react";
+import Skeleton from "../../core/Skeleton";
 import HomepageBottomCard from "./HomepageBottomCard";
 
 export default function HomepageBottomCardSSR(

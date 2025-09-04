@@ -5,7 +5,7 @@ import ImageItem from "@/app/components/common/ImageGrid/ImageItem";
 import { Button } from "@/app/components/core/Button";
 import { createClient } from "@/clients/supabase/server";
 import type { Topsoccer } from "@/types";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { IconCalendar, IconLayout2, IconMapPin } from "@tabler/icons-react";
 import { redirect } from "next/navigation";
 

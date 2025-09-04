@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { IconCaretLeftFilled, IconCaretRightFilled } from "@tabler/icons-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";

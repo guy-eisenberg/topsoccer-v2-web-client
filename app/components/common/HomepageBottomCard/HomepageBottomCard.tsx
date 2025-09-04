@@ -1,6 +1,6 @@
 "use client";
 
-import { Tab, type TabsProps } from "@heroui/tabs";
+import { Tab, type TabsProps } from "@heroui/react";
 import Link from "next/link";
 import Tabs from "../../core/Tabs";
 import PlayerAvatar from "../PlayerAvatar";

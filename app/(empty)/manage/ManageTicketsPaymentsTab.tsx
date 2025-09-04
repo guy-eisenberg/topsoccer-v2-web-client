@@ -13,15 +13,15 @@ import { useMounted } from "@/hooks/useMounted";
 import type { Topsoccer } from "@/types";
 import { prefix } from "@/utils/prefix";
 import { splitDate } from "@/utils/splitDate";
-import { Pagination } from "@heroui/pagination";
 import {
+  Pagination,
   Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
   TableRow,
-} from "@heroui/table";
+} from "@heroui/react";
 import { useEffect, useState } from "react";
 
 interface TicketPaymentResult {

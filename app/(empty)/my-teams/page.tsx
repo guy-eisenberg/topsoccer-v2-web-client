@@ -1,6 +1,6 @@
 import { Button } from "@/app/components/core/Button";
+import Skeleton from "@/app/components/core/Skeleton";
 import { fetchAuth } from "@/utils/server/fetchAuth";
-import { Skeleton } from "@heroui/skeleton";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";

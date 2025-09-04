@@ -5,7 +5,7 @@ import {
   ModalFooter,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 import { IconCheck } from "@tabler/icons-react";
 import { useState } from "react";
 import type { Topsoccer } from "../../../../types";

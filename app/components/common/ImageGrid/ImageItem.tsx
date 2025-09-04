@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { IconTrash, IconZoomIn } from "@tabler/icons-react";
 import Image from "next/image";
 import { useState } from "react";

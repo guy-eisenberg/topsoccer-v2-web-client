@@ -2,7 +2,7 @@
 
 import Tabs from "@/app/components/core/Tabs";
 import type { Topsoccer } from "@/types";
-import { Tab } from "@heroui/tabs";
+import { Tab } from "@heroui/react";
 import dynamic from "next/dynamic";
 
 const EditStadiumDetailsTab = dynamic(() => import("./EditStadiumDetailsTab"), {

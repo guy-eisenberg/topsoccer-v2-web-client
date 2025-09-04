@@ -6,7 +6,7 @@ import {
   ModalFooter,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 
 interface ResetGroupsModalProps extends Omit<ModalProps, "children"> {
   resetGroups: () => Promise<void>;

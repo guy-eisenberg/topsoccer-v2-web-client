@@ -1,7 +1,7 @@
 import type { Topsoccer } from "@/types";
 import { getFormattedDate } from "@/utils/getFormattedDate";
 import { isPast } from "@/utils/isPast";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { IconClock, IconMapPin, IconVideo } from "@tabler/icons-react";
 import Link from "next/link";
 

@@ -1,9 +1,9 @@
 import type { Topsoccer } from "@/types";
 import { cn } from "@heroui/react";
-import { Skeleton } from "@heroui/skeleton";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import Skeleton from "../../core/Skeleton";
 import PlayerNode from "./PlayerNode";
 
 interface SoccerMapProps extends React.HTMLAttributes<HTMLDivElement> {

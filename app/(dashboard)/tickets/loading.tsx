@@ -1,4 +1,4 @@
-import { Skeleton } from "@heroui/skeleton";
+import { Skeleton } from "@heroui/react";
 
 export default function TicketsPageLoading() {
   return <Skeleton className="h-full w-full rounded-xl" />;

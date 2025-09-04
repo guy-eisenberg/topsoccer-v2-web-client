@@ -8,7 +8,7 @@ import { useRouter } from "@/context/RouterContext";
 import type { Topsoccer } from "@/types";
 import { EVENT_TYPES } from "@/utils/constants";
 import toast from "@/utils/toast";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { useState } from "react";
 import { upsertStadium as _upsertStadium } from "./actions";
 

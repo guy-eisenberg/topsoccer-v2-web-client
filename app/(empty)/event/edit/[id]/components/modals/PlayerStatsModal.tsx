@@ -4,14 +4,14 @@ import { Select } from "@/app/components/core/Select";
 import { SelectItem } from "@/app/components/core/SelectItem";
 import type { Topsoccer } from "@/types";
 import {
+  cn,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
-import { cn } from "@heroui/theme";
+} from "@heroui/react";
 import { useEffect, useState } from "react";
 
 interface PlayerStatsModalProps extends Omit<ModalProps, "children"> {

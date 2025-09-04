@@ -1,5 +1,5 @@
 import type { Topsoccer } from "@/types";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import TeamAvatar from "./TeamAvatar";
 
 interface TeamCardProps extends React.HTMLAttributes<HTMLDivElement> {

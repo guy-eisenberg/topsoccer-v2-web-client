@@ -2,7 +2,7 @@
 
 import { Button } from "@/app/components/core/Button";
 import Checkbox from "@/app/components/core/Checkbox";
-import { Modal, ModalBody, ModalContent } from "@heroui/modal";
+import { Modal, ModalBody, ModalContent } from "@heroui/react";
 import { IconCaretLeftFilled, IconCaretRightFilled } from "@tabler/icons-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";

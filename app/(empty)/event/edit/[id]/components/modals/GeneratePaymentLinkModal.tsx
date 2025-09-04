@@ -10,9 +10,9 @@ import {
   ModalBody,
   ModalContent,
   ModalHeader,
+  RadioGroup,
   type ModalProps,
-} from "@heroui/modal";
-import { RadioGroup } from "@heroui/radio";
+} from "@heroui/react";
 import Link from "next/link";
 import { useState } from "react";
 import { generatePaymentLink as _generatePaymentLink } from "../../actions";

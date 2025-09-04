@@ -1,4 +1,4 @@
-import { addToast, closeAll } from "@heroui/toast";
+import { addToast, closeAll } from "@heroui/react";
 
 const toast = {
   success(title: string) {

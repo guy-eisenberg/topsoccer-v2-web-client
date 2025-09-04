@@ -1,4 +1,4 @@
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { IconTrash, IconUpload } from "@tabler/icons-react";
 import { useRef, useState } from "react";
 import { Button } from "./Button";

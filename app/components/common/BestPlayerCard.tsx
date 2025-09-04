@@ -1,5 +1,5 @@
 import type { Topsoccer } from "@/types";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import Image from "next/image";
 import PlayerAvatar from "./PlayerAvatar";
 

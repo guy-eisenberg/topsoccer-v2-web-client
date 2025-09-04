@@ -1,8 +1,7 @@
 "use client";
 
 import type { Topsoccer } from "@/types";
-import { ScrollShadow } from "@heroui/scroll-shadow";
-import { cn } from "@heroui/theme";
+import { cn, ScrollShadow } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";

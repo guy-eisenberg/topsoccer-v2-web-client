@@ -6,7 +6,7 @@ import {
   ModalFooter,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 
 interface CancelEventModalProps extends Omit<ModalProps, "children"> {
   createCashInvoice: () => Promise<void>;

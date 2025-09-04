@@ -1,4 +1,4 @@
-import { type SortDescriptor } from "@heroui/table";
+import { type SortDescriptor } from "@heroui/react";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 
 export default function useAsyncList<T>({

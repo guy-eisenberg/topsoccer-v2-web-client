@@ -2,7 +2,7 @@
 
 import PlayerAvatar from "@/app/components/common/PlayerAvatar";
 import type { Topsoccer } from "@/types";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { IconChevronDown } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import UserMenu from "./UserMenu";

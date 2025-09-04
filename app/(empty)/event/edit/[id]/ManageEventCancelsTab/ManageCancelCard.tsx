@@ -2,8 +2,7 @@ import PlayerAvatar from "@/app/components/common/PlayerAvatar";
 import { Button } from "@/app/components/core/Button";
 import type { Topsoccer } from "@/types";
 import { getFormattedDate } from "@/utils/getFormattedDate";
-import { cn } from "@heroui/theme";
-import { Tooltip } from "@heroui/tooltip";
+import { cn, Tooltip } from "@heroui/react";
 import { useState } from "react";
 import RefundPlayerModal from "../components/modals/RefundPlayerModal";
 

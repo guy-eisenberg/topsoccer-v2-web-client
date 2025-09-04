@@ -1,4 +1,4 @@
-import { Modal, ModalBody, ModalContent, type ModalProps } from "@heroui/modal";
+import { Modal, ModalBody, ModalContent, type ModalProps } from "@heroui/react";
 
 export default function ImageExpandModal({
   src,

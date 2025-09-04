@@ -7,7 +7,7 @@ import {
   ModalFooter,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 import { Button } from "../../core/Button";
 import { showLoading } from "../Loader/Loader";
 

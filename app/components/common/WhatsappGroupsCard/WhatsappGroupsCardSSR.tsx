@@ -1,7 +1,7 @@
 import { Contentful } from "@/clients/contentful";
-import { Skeleton } from "@heroui/skeleton";
 import Image from "next/image";
 import { Suspense } from "react";
+import Skeleton from "../../core/Skeleton";
 import WhatsappIcon from "../icons/WhatsappIcon";
 
 export default function WhatsappGroupsCardSSR(

@@ -6,7 +6,7 @@ import {
   ModalFooter,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 
 interface RemovePlayerModalProps extends Omit<ModalProps, "children"> {
   player: { display_name: string };

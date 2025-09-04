@@ -1,7 +1,6 @@
 "use client";
 
-import { Textarea as _Textarea } from "@heroui/input";
-import { extendVariants } from "@heroui/system";
+import { Textarea as _Textarea, extendVariants } from "@heroui/react";
 
 const Textarea = extendVariants(_Textarea, {
   defaultVariants: {

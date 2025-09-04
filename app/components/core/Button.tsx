@@ -1,7 +1,6 @@
 "use client";
 
-import { Button as _Button } from "@heroui/button";
-import { extendVariants } from "@heroui/system";
+import { Button as _Button, extendVariants } from "@heroui/react";
 
 export const Button = extendVariants(_Button, {
   variants: {

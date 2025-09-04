@@ -1,7 +1,7 @@
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import SimpleImage from "@editorjs/simple-image";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { useEffect, useId, useRef, useState } from "react";
 
 interface EditorProps extends React.HTMLAttributes<HTMLDivElement> {

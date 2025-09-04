@@ -5,7 +5,7 @@ import {
   ModalFooter,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 import { useMemo, useState } from "react";
 import type { Topsoccer } from "../../../../types";
 import { Button } from "../../core/Button";

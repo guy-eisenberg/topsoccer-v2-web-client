@@ -1,8 +1,8 @@
 "use client";
 
-import { Skeleton } from "@heroui/skeleton";
 import Hls from "hls.js";
 import { useEffect, useRef, useState } from "react";
+import Skeleton from "./Skeleton";
 
 export default function HLSPlayer({
   src,

@@ -1,7 +1,7 @@
 import GoalIcon from "@/app/components/common/icons/GoalIcon";
 import MVPIcon from "@/app/components/common/icons/MVPIcon";
 import ShowIcon from "@/app/components/common/icons/ShowIcon";
-import { Skeleton } from "@heroui/skeleton";
+import { Skeleton } from "@heroui/react";
 
 export default function PlayersStatsTableLoading() {
   return (

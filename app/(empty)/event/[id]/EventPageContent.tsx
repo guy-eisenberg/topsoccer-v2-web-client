@@ -24,8 +24,7 @@ import type { Topsoccer } from "@/types";
 import { getFormattedDate } from "@/utils/getFormattedDate";
 import { isPast } from "@/utils/isPast";
 import toast from "@/utils/toast";
-import { Chip } from "@heroui/chip";
-import { Tab } from "@heroui/tabs";
+import { Chip, Tab } from "@heroui/react";
 import {
   IconClock,
   IconEdit,

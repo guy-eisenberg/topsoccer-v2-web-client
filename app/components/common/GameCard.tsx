@@ -1,5 +1,5 @@
 import type { Topsoccer } from "@/types";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { useState } from "react";
 import { Button } from "../core/Button";
 import Input from "../core/Input";

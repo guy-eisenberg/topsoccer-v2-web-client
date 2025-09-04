@@ -1,6 +1,6 @@
 "use client";
 
-import { Tab, type TabsProps } from "@heroui/tabs";
+import { Tab, type TabsProps } from "@heroui/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Tabs from "./Tabs";
 

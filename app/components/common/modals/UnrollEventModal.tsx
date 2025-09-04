@@ -5,7 +5,7 @@ import {
   ModalFooter,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 import { Button } from "../../core/Button";
 
 interface UnrollEventModalProps extends Omit<ModalProps, "children"> {

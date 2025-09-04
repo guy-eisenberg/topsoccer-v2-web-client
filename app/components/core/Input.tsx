@@ -1,7 +1,6 @@
 "use client";
 
-import { Input as _Input } from "@heroui/input";
-import { extendVariants } from "@heroui/system";
+import { Input as _Input, extendVariants } from "@heroui/react";
 
 const Input = extendVariants(_Input, {
   defaultVariants: {

@@ -1,7 +1,6 @@
 "use client";
 
-import { DatePicker as __DatePicker } from "@heroui/date-picker";
-import { extendVariants } from "@heroui/system";
+import { DatePicker as __DatePicker, extendVariants } from "@heroui/react";
 import { I18nProvider } from "@react-aria/i18n";
 
 const _DatePicker = extendVariants(__DatePicker, {

@@ -1,8 +1,8 @@
 import { fetchAuth } from "@/utils/server/fetchAuth";
-import { Skeleton } from "@heroui/skeleton";
 import Link from "next/link";
 import { Suspense } from "react";
 import Logo from "../components/common/assets/Logo";
+import Skeleton from "../components/core/Skeleton";
 import AlertChip from "./components/AlertChip";
 import DesktopHeader from "./components/DesktopHeader";
 import MobileHeader from "./components/MobileHeader";

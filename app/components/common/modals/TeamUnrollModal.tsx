@@ -4,7 +4,7 @@ import {
   ModalContent,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 import type { Topsoccer } from "../../../../types";
 import TeamCard from "../TeamCard";
 

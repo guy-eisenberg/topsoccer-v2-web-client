@@ -1,5 +1,5 @@
 import type { Topsoccer } from "@/types";
-import { Radio, type RadioProps } from "@heroui/radio";
+import { Radio, type RadioProps } from "@heroui/react";
 import { useMemo } from "react";
 import ApplePayIcon from "./icons/ApplePayIcon";
 import BitIcon from "./icons/BitIcon";

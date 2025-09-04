@@ -1,5 +1,5 @@
 import type { Topsoccer } from "@/types";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import { IconCalendar, IconLayout2, IconMapPin } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";

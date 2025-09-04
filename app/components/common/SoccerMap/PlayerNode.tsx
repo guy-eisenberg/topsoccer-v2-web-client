@@ -1,5 +1,5 @@
 import type { Topsoccer } from "@/types";
-import { cn } from "@heroui/theme";
+import { cn } from "@heroui/react";
 import interact from "interactjs";
 import { useEffect, useMemo } from "react";
 import PlayerAvatar from "../PlayerAvatar";

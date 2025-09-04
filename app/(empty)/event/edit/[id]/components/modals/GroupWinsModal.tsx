@@ -10,7 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
   type ModalProps,
-} from "@heroui/modal";
+} from "@heroui/react";
 import { useState } from "react";
 
 interface GropuWinsModalProps extends Omit<ModalProps, "children"> {

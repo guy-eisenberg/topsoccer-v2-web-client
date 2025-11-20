@@ -5,6 +5,8 @@ import { createCreditInvoice } from "@/utils/server/createInvoice";
 export async function POST(request: Request) {
   const body = (await request.json()) as Topsoccer.VerifonePaymentData;
 
+  console.log(JSON.stringify(body));
+
   if (body.eventType === "TxnSaleApproved") {
     const supabase = createServiceClient();
 

@@ -45,6 +45,8 @@ export async function POST(request: Request) {
     },
   };
 
+  console.log(JSON.stringify(finalData));
+
   if (Object.keys(data).length > 0) {
     if (data.status === "1") {
       const supabase = createServiceClient();

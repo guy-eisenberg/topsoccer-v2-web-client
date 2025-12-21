@@ -21,76 +21,148 @@ const ENTRIES = {
 
 export class Contentful {
   static async getMainWhatsappLink() {
-    const {
-      fields: { url },
-    } = await contentful.getEntry(ENTRIES.MAIN_WHATSAPP_LINK);
+    try {
+      const {
+        fields: { url },
+      } = await contentful.getEntry(ENTRIES.MAIN_WHATSAPP_LINK);
 
-    return url as string;
+      return url as string;
+    } catch {
+      return "https://api.whatsapp.com/send/?phone=972549733105";
+    }
   }
 
   static async getWhatsappGroupLinks() {
-    const {
-      fields: { urls },
-    } = await contentful.getEntry(ENTRIES.WHATSAPP_GROUPS_LINKS);
+    try {
+      const {
+        fields: { urls },
+      } = await contentful.getEntry(ENTRIES.WHATSAPP_GROUPS_LINKS);
 
-    return urls as { label: string; url: string }[];
+      return urls as { label: string; url: string }[];
+    } catch {
+      return [
+        {
+          label: "ראשל״צ 7X7",
+          url: "https://chat.whatsapp.com/G1hLwYWQ52PH5pv2s23xv6",
+        },
+        {
+          label: "רמת גן 7X7",
+          url: "https://chat.whatsapp.com/JCyaApU33b5155SGAwhjOl",
+        },
+        {
+          label: "רמת גן 7X7",
+          url: "https://chat.whatsapp.com/GIUxWeDuLu2FjVSO3HBB88",
+        },
+        {
+          label: "ראשל״צ 6X6",
+          url: "https://chat.whatsapp.com/JrBa3Y9Mx2kC7c2fXB2X29",
+        },
+      ];
+    }
   }
 
   static async getSocialLinks() {
-    const {
-      fields: { url: instagram },
-    } = await contentful.getEntry(ENTRIES.INSTAGRAM_LINK);
-    const {
-      fields: { url: facebook },
-    } = await contentful.getEntry(ENTRIES.FACEBOOK_LINK);
-    const {
-      fields: { url: tiktok },
-    } = await contentful.getEntry(ENTRIES.TIKTOK_LINK);
+    try {
+      const {
+        fields: { url: instagram },
+      } = await contentful.getEntry(ENTRIES.INSTAGRAM_LINK);
+      const {
+        fields: { url: facebook },
+      } = await contentful.getEntry(ENTRIES.FACEBOOK_LINK);
+      const {
+        fields: { url: tiktok },
+      } = await contentful.getEntry(ENTRIES.TIKTOK_LINK);
 
-    return { instagram, facebook, tiktok } as {
-      instagram: string;
-      facebook: string;
-      tiktok: string;
-    };
+      return { instagram, facebook, tiktok } as {
+        instagram: string;
+        facebook: string;
+        tiktok: string;
+      };
+    } catch {
+      return {
+        instagram: "https://www.instagram.com/topsoccerisrael",
+        facebook: "https://www.facebook.com/topsoccerisrael",
+        tiktok: "https://www.tiktok.com/@topsoccerisrael",
+      };
+    }
   }
 
   static async getWeeklyBestMoveLink() {
-    const {
-      fields: { url },
-    } = await contentful.getEntry(ENTRIES.WEEKLY_BEST_MOVE_LINK);
+    try {
+      const {
+        fields: { url },
+      } = await contentful.getEntry(ENTRIES.WEEKLY_BEST_MOVE_LINK);
 
-    return url as string;
+      return url as string;
+    } catch {
+      return "https://www.youtube.com/embed/1FF37seNwxM?si=ZH59_PdKb9EjIeAt";
+    }
   }
 
   static async getAvailableTickets() {
-    const {
-      fields: { tickets },
-    } = await contentful.getEntry(ENTRIES.TICKETS);
+    try {
+      const {
+        fields: { tickets },
+      } = await contentful.getEntry(ENTRIES.TICKETS);
 
-    return tickets as Topsoccer.Ticket.Object[];
+      return tickets as Topsoccer.Ticket.Object[];
+    } catch {
+      return [
+        {
+          id: "0",
+          title: "כרטיסיית מתחילים",
+          amount: 5,
+          price: 230,
+        },
+        {
+          id: "1",
+          title: "כרטיסיית מתקדמים",
+          amount: 10,
+          price: 450,
+        },
+        {
+          id: "2",
+          title: "כרטיסיית פנטזי",
+          amount: 24,
+          price: 1000,
+        },
+      ];
+    }
   }
 
   static async getWelcomeComment() {
-    const {
-      fields: { text },
-    } = await contentful.getEntry(ENTRIES.WELCOME_COMMENT);
+    try {
+      const {
+        fields: { text },
+      } = await contentful.getEntry(ENTRIES.WELCOME_COMMENT);
 
-    return text as string;
+      return text as string;
+    } catch {
+      return "⚽ ברוכים הבאים לטופסוקר! ⚽";
+    }
   }
 
   static async getHomepageAlert() {
-    const {
-      fields: { content },
-    } = await contentful.getEntry(ENTRIES.HOMEPAGE_ALERT);
+    try {
+      const {
+        fields: { content },
+      } = await contentful.getEntry(ENTRIES.HOMEPAGE_ALERT);
 
-    return content as string;
+      return content as string;
+    } catch {
+      return "מתזכרים את כולם שההשתתפות במשחקי הכדורגל בטופ סוקר באחריות השחקן ואין ביטוח על פציעות שחקנים";
+    }
   }
 
   static async getUpsalesBanners() {
-    const {
-      fields: { banners },
-    } = await contentful.getEntry(ENTRIES.UPSALES_BANNERS);
+    try {
+      const {
+        fields: { banners },
+      } = await contentful.getEntry(ENTRIES.UPSALES_BANNERS);
 
-    return banners as { fields: { file: { url: string } } }[];
+      return banners as { fields: { file: { url: string } } }[];
+    } catch {
+      return [];
+    }
   }
 }

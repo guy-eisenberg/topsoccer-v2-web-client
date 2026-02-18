@@ -50,10 +50,6 @@ export class Contentful {
           url: "https://chat.whatsapp.com/JCyaApU33b5155SGAwhjOl",
         },
         {
-          label: "רחובות 6X6",
-          url: "https://chat.whatsapp.com/ESyyRQV5dESBxlF2bfoRjp",
-        },
-        {
           label: "ראשל״צ 6X6",
           url: "https://chat.whatsapp.com/JrBa3Y9Mx2kC7c2fXB2X29",
         },

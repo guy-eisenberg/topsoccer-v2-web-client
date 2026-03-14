@@ -42,8 +42,8 @@ export default function TicketsPageContent({
         ))}
       </div>
       <p className="mt-4 text-sm text-theme-gray">
-        💡 לא חייבים כרטיסייה — אפשר לשלם ישירות בעמוד המשחק עם כרטיס אשראי
-        או ביט.
+        💡 שחקנים קבועים? הכרטיסייה יותר משתלמת. אבל אפשר לשלם ישירות בעמוד
+        המשחק.
       </p>
 
       {user && (

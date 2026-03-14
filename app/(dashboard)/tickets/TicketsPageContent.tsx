@@ -41,7 +41,7 @@ export default function TicketsPageContent({
           />
         ))}
       </div>
-      <p className="mt-4 text-sm text-theme-gray">
+      <p className="mt-4 text-base text-theme-gray">
         💡 שחקנים קבועים? הכרטיסייה יותר משתלמת. אבל אפשר לשלם ישירות בעמוד
         המשחק.
       </p>

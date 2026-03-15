@@ -50,10 +50,6 @@ export class Contentful {
           url: "https://chat.whatsapp.com/JCyaApU33b5155SGAwhjOl",
         },
         {
-          label: "רמת גן 7X7",
-          url: "https://chat.whatsapp.com/GIUxWeDuLu2FjVSO3HBB88",
-        },
-        {
           label: "ראשל״צ 6X6",
           url: "https://chat.whatsapp.com/JrBa3Y9Mx2kC7c2fXB2X29",
         },

@@ -55,6 +55,6 @@
     "tailwind-scrollbar": "4.0.2",
     "tailwindcss": "4.1.12",
     "typescript": "5.9.2",
-    "vercel": "47.0.7"
+    "vercel": "^50.25.4"
   }
 }

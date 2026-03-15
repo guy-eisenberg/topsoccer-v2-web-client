@@ -28,6 +28,10 @@ export default function TicketsPageContent({
       <p className="text-theme-gray md:text-xl">
         בחר את הכרטיסיה המתאימה עבורך:
       </p>
+      <p className="mt-4 text-base text-theme-gray">
+        💡 שחקנים קבועים? הכרטיסייה יותר משתלמת. אבל אפשר לשלם ישירות בעמוד
+        המשחק.
+      </p>
       <div className="mt-4 grid gap-4 md:grid-cols-3">
         {tickets.map((ticket) => (
           <TicketCard

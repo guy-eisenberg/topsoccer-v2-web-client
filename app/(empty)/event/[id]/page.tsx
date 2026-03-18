@@ -1,4 +1,3 @@
-import UpsaleModalSSR from "@/app/components/common/modals/UpsaleModal/UpsaleModalSSR";
 import { createClient } from "@/clients/supabase/server";
 import { fetchAuth } from "@/utils/server/fetchAuth";
 import { fetchBanners } from "@/utils/server/fetchBanners";
@@ -21,17 +20,14 @@ export default async function EventPage({
   if (!event) redirect("/");
 
   return (
-    <>
-      <EventPageContent
-        user={user}
-        user_teams={teams}
-        payment={payment}
-        is_worker={is_worker || false}
-        event={event}
-        banners={banners}
-      />
-      <UpsaleModalSSR />
-    </>
+    <EventPageContent
+      user={user}
+      user_teams={teams}
+      payment={payment}
+      is_worker={is_worker || false}
+      event={event}
+      banners={banners}
+    />
   );
 }
 

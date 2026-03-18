@@ -60,7 +60,7 @@ export async function enrollEvent({
         .eq("user_id", user.id),
     ]);
 
-    return `${origin}/event/${event_id}?status=enroll_success&show-upsale=true`;
+    return `${origin}/event/${event_id}?status=enroll_success`;
   }
 
   if (
@@ -98,7 +98,7 @@ export async function enrollEvent({
         : null,
     ]);
 
-    return `${origin}/event/${event_id}?status=enroll_success&show-upsale=true`;
+    return `${origin}/event/${event_id}?status=enroll_success`;
   }
 
   const { url } = await generateEventPayment(supabase, {
@@ -161,7 +161,7 @@ export async function teamEnrollEvent({
 
   if (error) throw error;
 
-  return `${origin}/event/${event_id}?status=enroll_success&show-upsale=true`;
+  return `${origin}/event/${event_id}?status=enroll_success`;
 }
 
 export async function teamUnrollEvent({

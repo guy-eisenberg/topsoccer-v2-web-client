@@ -18,7 +18,7 @@ export default async function PaymentLoader({
 
   if (type === "authenticated")
     return redirect(
-      `/event/${payment.event_id}?status=enroll_success&show-upsale=true`,
+      `/event/${payment.event_id}?status=enroll_success`,
     );
   else if (type === "unauthenticated")
     return (

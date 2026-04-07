@@ -24,6 +24,11 @@ export default function UserMenu({
         <div className="rounded-xl border border-transparent bg-theme-green/10 px-3 py-2 font-medium text-theme-green">
           {user.wallet} ניקובים
         </div>
+        <Link href="/tickets">
+          <button className="w-full rounded-xl border border-transparent px-3 py-2 font-medium hover:border-theme-green">
+            כרטיסיות לרכישה
+          </button>
+        </Link>
         {(user.role === "admin" || user.role === "worker") && (
           <Link href="/manage">
             <button className="w-full rounded-xl border border-transparent px-3 py-2 font-medium hover:border-theme-green">

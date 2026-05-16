@@ -20,6 +20,7 @@ export default async function RootLayout({
 }>) {
   const showAnnouncementPopup = await getFeatureFlag("show_announcement_popup");
 
+  
   return (
     <html
       className="flex min-h-full flex-col md:h-full"

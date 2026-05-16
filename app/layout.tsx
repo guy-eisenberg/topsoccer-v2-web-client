@@ -18,7 +18,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const showAnnouncementPopup = await getFeatureFlag("show_announcement_popup");
+  const showAnnouncementPopup = false;
 
   return (
     <html

@@ -19,7 +19,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const showAnnouncementPopup = false;
-
+  
   return (
     <html
       className="flex min-h-full flex-col md:h-full"
